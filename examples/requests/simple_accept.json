@@ -1,0 +1,8 @@
+{
+  "request_id": "toy-accept-001",
+  "actor": "public-demo",
+  "action": "summarize",
+  "content": "Summarize this toy audit receipt.",
+  "declared_scope": "toy"
+}
+

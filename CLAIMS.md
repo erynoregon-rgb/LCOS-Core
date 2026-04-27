@@ -1,35 +1,28 @@
-# Claim Safety Rules
+# Claim Safety
 
-This repository uses a public claim-safety policy.
+This toy package uses strict public-claim boundaries.
 
 ## Rules
 
-1. External claims must be supported by code, tests, or public docs in this repo.
-2. Experimental ideas must be labeled as experimental.
-3. Research notes are not implementation claims.
-4. Examples are illustrative unless tied to tested library code.
-5. Private-repo lineage may be acknowledged, but public claims come from the public tree only.
-6. Public implementation claims must be supported by the public repository itself, not by private lineage.
-7. Research notes and design documents do not grant reuse rights beyond the repository's selected license status.
+1. Public implementation claims must be supported by files in this package.
+2. Tests and runnable examples are stronger evidence than research notes.
+3. Research notes describe design tradeoffs, not production capability.
+4. Synthetic fixtures do not imply production trace behavior.
+5. Private lineage may be acknowledged, but public claims come from this tree.
+6. The package demonstrates mechanism classes, not private mechanism advantage.
+7. Release documentation does not grant rights beyond the current license.
 
-## Status vocabulary
+## Safe claims
 
-- **implemented** — code exists and is intended to run
-- **tested** — covered by an automated test in this repo
-- **example** — runnable demo or walkthrough, not a general implementation claim
-- **experimental** — research code or design under active exploration
-- **research-note** — conceptual or specification text, not proof of implementation
+- The toy ledger detects simple receipt-chain tampering in an append-oriented JSONL log.
+- The toy intake workbench produces accept/hold/reject decisions.
+- The toy router is deterministic and returns visible reasons.
+- The toy replay tool renders a timeline from receipt JSONL.
 
-## Public-claim basis
+## Unsafe claims
 
-Prefer the following evidence order:
-
-1. running code
-2. tests
-3. schemas/contracts used by code
-4. examples with clear limitations
-5. research notes
-
-## Non-goals
-
-This repository does not use private vocabulary as public evidence. Public wording should stay generic, technical, and implementation-facing.
+- Do not claim this package implements the private SKOS system.
+- Do not claim production routing quality from the toy router.
+- Do not claim patent coverage from this repository alone.
+- Do not claim real operational validation from synthetic fixtures.
+- Do not claim the ledger is OS-enforced immutable or cryptographically signed.

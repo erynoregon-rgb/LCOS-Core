@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ToyIntakeRequest",
+  "type": "object",
+  "required": ["request_id", "actor", "action", "content"],
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "actor": {"type": "string", "minLength": 1},
+    "action": {"type": "string", "minLength": 1},
+    "content": {"type": "string", "minLength": 1},
+    "declared_scope": {"type": "string"}
+  }
+}
+

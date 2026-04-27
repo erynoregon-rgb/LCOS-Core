@@ -1,112 +1,94 @@
-# LCOS-Core
+# LCOS-Core Toy Public Package
 
-**LCOS-Core** is a Layered Cognitive Operations Substrate for governed agentic systems.
+LCOS-Core Toy is a small, deterministic public scaffold for governed agentic
+runtime primitives. It is designed to show the engineering spine without
+publishing private strategy.
 
-It is a research-oriented runtime for governed inference. The repository explores receipt-gated execution, deterministic routing, bounded operator kernels, and continuous state handling. It includes generic infrastructure, research notes, and runnable examples designed to make runtime claims auditable and implementation-facing.
+This package demonstrates:
 
-## Scope
+- append-oriented JSONL receipt ledgers with hash-chain verification
+- tamper-aware replay
+- typed hold/escalate/reject/accept decisions
+- schema-light intake validation
+- deterministic toy routing with visible reasons
+- adversarial fixture tests
+- release/IP boundary documentation
 
-This public repository contains independent, generalized research and example code released as a public substrate. It is not a mirror of any private repository, employer work product, or unreleased internal architecture.
+It intentionally does not include:
 
-The public surface focuses on three stable slices:
+- non-public implementation details
+- production configuration
+- real operational traces
+- private source code, vocabulary, or architecture
 
-1. **Receipt and audit core**
-   - append-only receipt objects
-   - parent-linked receipt chain
-   - verification utilities
-   - minimal CLI demo
-2. **Governed intake example**
-   - typed intake request
-   - validation
-   - admissibility decision
-   - extraction packet example
-   - receipts on every stage
-3. **Routing research demo**
-   - small deterministic router
-   - registry of kernel capabilities
-   - example bounded models or mock kernels
-   - explicit `HOLD` / `ESCALATE` behavior
+## Public posture
 
-## Repository layout
+Public equals mechanism class. Private equals mechanism advantage.
+
+This toy repository is a reduced example for review, hiring, grant, and
+research-facing evaluation. It is not the full private system and should not be
+read as a publication of the decisive internal strategy.
+
+The current license file is `All rights reserved` while patent/copyright and
+future licensing posture are evaluated.
+
+## Layout
 
 ```text
-src/lcos/
-  receipts/      append-only receipts and verification
-  governance/    decision types and policy helpers
-  intake/        typed request/intake example
-  routing/       deterministic routing demo
-  state/         continuous state placeholders
-  kernels/       bounded kernel interfaces and mocks
-
-examples/
-  minimal_receipt_chain/
-  governed_intake_demo/
-  routing_demo/
-
-docs/
-  concepts/      implementation-facing notes
-  research/      hypothesis/spec/research notes
-  examples/      walkthroughs
-  release/       IP and release documentation
+src/lcos_toy/
+  receipt.py       receipt record and digest logic
+  ledger.py        append-oriented JSONL ledger and verifier
+  decision.py      typed decision objects
+  intake.py        schema-light governed intake workbench
+  router.py        deterministic toy router with explanations
+  replay.py        audit/replay timeline renderer
+  cli.py           small command-line interface
 
 tests/
-  receipts/
-  intake/
-  routing/
+  test_ledger.py
+  test_intake.py
+  test_router.py
+  test_replay.py
+
+schemas/
+  receipt.schema.json
+  intake_request.schema.json
+  routing_decision.schema.json
+
+fixtures/adversarial/
+  malformed_request.json
+  ambiguous_request.json
+  private_trace_reject_request.json
+  out_of_scope_escalate_request.json
+
+docs/release/
+  RELEASE_INTENT.md
+  PUBLIC_SCOPE.md
+  IP_POSITION.md
+  SKOS_TO_LCOS_BOUNDARY.md
+  THIRD_PARTY_AND_ATTRIBUTION_REVIEW.md
+  PUBLIC_DISCLOSURE_NOTICE.md
+
+docs/research/
+  hold_as_first_class_state.md
+  deterministic_routing_for_auditability.md
+  bounded_kernels_as_governance_surface.md
 ```
-
-## Claim safety
-
-See [CLAIMS.md](./CLAIMS.md).
-
-External implementation claims are supported by code, tests, or public docs in this repository. Public implementation claims are limited to the contents of this repository. Research notes are not implementation claims.
-
-## IP and Release
-
-This repository is released with `All rights reserved.` pending license finalization. See [`docs/release/`](./docs/release/) for:
-
-- [RELEASE_INTENT.md](./docs/release/RELEASE_INTENT.md) — What is being released
-- [PUBLIC_SCOPE.md](./docs/release/PUBLIC_SCOPE.md) — Public surface definition
-- [IP_POSITION.md](./docs/release/IP_POSITION.md) — Patent and licensing strategy
-- [SKOS_TO_LCOS_DERIVATION_MAP.md](./docs/release/SKOS_TO_LCOS_DERIVATION_MAP.md) — Lineage and separation from SKOS
-- [THIRD_PARTY_AND_ATTRIBUTION_REVIEW.md](./docs/release/THIRD_PARTY_AND_ATTRIBUTION_REVIEW.md) — Dependency and attribution audit
-
-## Milestones
-
-### Milestone 1 — public seed
-- README
-- LICENSE
-- CLAIMS.md
-- repo structure
-- receipt-chain example
-- one governed-intake example
-
-### Milestone 2 — generic runtime core
-- `src/lcos/receipts`
-- `src/lcos/governance`
-- `src/lcos/intake`
-- tests for all three
-
-### Milestone 3 — research lane
-- operator kernel note
-- routing graph note
-- continuous state note
-- one minimal runnable routing demo
 
 ## Quick start
 
 ```bash
 python -m pip install -e .
-python examples/minimal_receipt_chain/demo.py
-python examples/governed_intake_demo/demo.py
-python examples/routing_demo/demo.py
-pytest
+python -m lcos_toy.cli demo-ledger
+python -m lcos_toy.cli demo-intake examples/requests/simple_accept.json
+python -m lcos_toy.cli demo-route "summarize this audit receipt"
+python -m unittest discover -s tests
 ```
 
-## Status
+## Claim safety
 
-This repository contains a mix of implemented examples and research notes.
+Implementation claims are limited to the contents of this repository. Research
+notes are design discussion, not proof of private system capability.
 
-- `src/` and `tests/` are the primary basis for runtime claims.
-- `docs/research/` contains definitions, hypotheses, and open questions.
-- `examples/` are illustrative unless backed by tests.
+See [PUBLIC_DISCLOSURE_NOTICE.md](./PUBLIC_DISCLOSURE_NOTICE.md) and
+[`docs/release/`](./docs/release/) before publishing this repository.

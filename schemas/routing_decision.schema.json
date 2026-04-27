@@ -1,11 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "RouteResult",
+  "title": "ToyRoutingDecision",
   "type": "object",
-  "required": ["decision", "reason"],
+  "required": ["kind", "reason", "evidence", "kernel_id"],
   "properties": {
-    "decision": {"type": "string", "enum": ["ROUTE", "HOLD", "ESCALATE"]},
-    "kernel_id": {"type": ["string", "null"]},
-    "reason": {"type": "string"}
+    "kind": {"enum": ["ACCEPT", "HOLD", "REJECT", "ESCALATE"]},
+    "reason": {"type": "string"},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "kernel_id": {"type": ["string", "null"]}
   }
 }
+

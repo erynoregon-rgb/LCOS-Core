@@ -1,1 +1,0 @@
-"""LCOS-Core public scaffold."""

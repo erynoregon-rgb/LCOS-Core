@@ -1,0 +1,7 @@
+{
+  "request_id": "toy-escalate-001",
+  "actor": "public-demo",
+  "action": "execute",
+  "content": "Run this toy action outside the declared public scope.",
+  "declared_scope": "production"
+}
