@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IntakeRequest",
+  "type": "object",
+  "required": ["request_id", "goal", "content", "source_type"],
+  "properties": {
+    "request_id": {"type": "string"},
+    "goal": {"type": "string"},
+    "content": {"type": "string"},
+    "source_type": {"type": "string"}
+  }
+}

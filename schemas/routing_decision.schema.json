@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RouteResult",
+  "type": "object",
+  "required": ["decision", "reason"],
+  "properties": {
+    "decision": {"type": "string", "enum": ["ROUTE", "HOLD", "ESCALATE"]},
+    "kernel_id": {"type": ["string", "null"]},
+    "reason": {"type": "string"}
+  }
+}

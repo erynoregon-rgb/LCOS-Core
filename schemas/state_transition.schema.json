@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateTransition",
+  "type": "object",
+  "required": ["transition_id", "event", "created_at"],
+  "properties": {
+    "transition_id": {"type": "string"},
+    "event": {"type": "string"},
+    "created_at": {"type": "string"}
+  }
+}

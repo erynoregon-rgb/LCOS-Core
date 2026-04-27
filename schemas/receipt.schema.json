@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Receipt",
+  "type": "object",
+  "required": ["receipt_id", "action", "subject", "payload", "created_at"],
+  "properties": {
+    "receipt_id": {"type": "string"},
+    "action": {"type": "string"},
+    "subject": {"type": "string"},
+    "payload": {"type": "object"},
+    "created_at": {"type": "string"},
+    "parent_receipt_id": {"type": ["string", "null"]},
+    "prev_hash": {"type": ["string", "null"]}
+  }
+}

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lcos-core"
+version = "0.1.0"
+description = "Layered Cognitive Operations Substrate for governed agentic systems"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Eryn Eldvar"}]
+dependencies = []
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
