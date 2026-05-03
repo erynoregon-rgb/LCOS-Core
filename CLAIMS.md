@@ -2,6 +2,10 @@
 
 This toy package uses strict public-claim boundaries.
 
+LCOS-Core is a public reduced scaffold and proof-of-mechanism surface. It is
+not the private SKOS system, and it is not a claim of general safety or
+production reliability.
+
 ## Rules
 
 1. Public implementation claims must be supported by files in this package.
@@ -11,6 +15,7 @@ This toy package uses strict public-claim boundaries.
 5. Private lineage may be acknowledged, but public claims come from this tree.
 6. The package demonstrates mechanism classes, not private mechanism advantage.
 7. Release documentation does not grant rights beyond the current license.
+8. Public positioning docs must only claim the scope proved by this tree.
 
 ## Safe claims
 
@@ -18,6 +23,8 @@ This toy package uses strict public-claim boundaries.
 - The toy intake workbench produces accept/hold/reject decisions.
 - The toy router is deterministic and returns visible reasons.
 - The toy replay tool renders a timeline from receipt JSONL.
+- The public positioning packet describes a fundable public scaffold, not the
+  private substrate.
 
 ## Unsafe claims
 
