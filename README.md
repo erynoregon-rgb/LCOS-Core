@@ -1,8 +1,13 @@
 # LCOS-Core Toy Public Package
 
-LCOS-Core is the public demonstration layer for a larger private research program.
-It is intentionally small: the point is to show the governance primitive, not to
-publish the full private substrate.
+AI agents make claims about what they did. This is infrastructure for verifying
+those claims without trusting the agent's account.
+
+LCOS-Core is the self-contained public demonstration of those mechanisms. It is
+the verifiable layer of a larger private research program — the part that can be
+cloned, run, and inspected independently. The full system is described in the
+accompanying paper; LCOS-Core is the artifact that makes the paper's claims
+checkable.
 
 This package demonstrates a bounded toy implementation of receipt-gated governance
 primitives: append-oriented receipt logs, tamper-aware replay, typed decision states,
