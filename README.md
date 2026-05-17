@@ -3,11 +3,17 @@
 AI agents make claims about what they did. This is infrastructure for verifying
 those claims without trusting the agent's account.
 
-LCOS-Core is the self-contained public demonstration of those mechanisms. It is
-the verifiable layer of a larger private research program — the part that can be
-cloned, run, and inspected independently. The full system is described in the
-accompanying paper; LCOS-Core is the artifact that makes the paper's claims
-checkable.
+The system is not asking whether an AI sounds trustworthy. It asks whether the
+claim can be reconstructed from custody records, gate decisions, and receipts.
+
+LCOS-Core demonstrates the two underlying primitives: chain of custody (what
+happened, in what order, with what evidence) and control plane (who may act,
+through which surface, under which gate). Everything else — typed decisions,
+governed intake, deterministic routing, replay — is a specialized expression of
+those two.
+
+This is the self-contained public layer of a larger private research program.
+The part that can be cloned, run, and inspected independently.
 
 This package demonstrates a bounded toy implementation of receipt-gated governance
 primitives: append-oriented receipt logs, tamper-aware replay, typed decision states,
