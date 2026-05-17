@@ -1,16 +1,47 @@
 # LCOS-Core Toy Public Package
 
-LCOS-Core Toy is a small, deterministic public scaffold for governed agentic
-runtime primitives. It is designed to show the engineering spine without
-publishing private strategy.
+LCOS-Core is the public demonstration layer for a larger private research program.
+It is intentionally small: the point is to show the governance primitive, not to
+publish the full private substrate.
+
+This package demonstrates a bounded toy implementation of receipt-gated governance
+primitives: append-oriented receipt logs, tamper-aware replay, typed decision states,
+claim lifecycle with transition receipts, gate-first execution, and public/private
+disclosure boundaries.
+
+## Try the demo in 60 seconds
+
+```bash
+python -m pip install -e .
+python -m lcos_toy.cli demo-ledger
+python -m lcos_toy.cli demo-intake examples/requests/simple_accept.json
+python -m lcos_toy.cli demo-route "summarize this audit receipt"
+python -m unittest discover -s tests
+```
+
+Expected results:
+
+- `demo-ledger` — prints a hash-linked receipt timeline and confirms `valid=true`
+- `demo-intake` — returns `{"kind": "ACCEPT", ...}` for a well-formed toy request
+- `demo-route` — returns a deterministic kernel routing decision with a visible reason
+- `tests` — all pass
+
+For the full walkthrough including tamper detection and claim lifecycle, see
+[`docs/research/WORKED_EXAMPLE_RECEIPT_REPLAY.md`](docs/research/WORKED_EXAMPLE_RECEIPT_REPLAY.md).
+
+For what is implemented and where, see [`EVIDENCE_MAP.md`](EVIDENCE_MAP.md).
 
 This package demonstrates:
 
 - append-oriented JSONL receipt ledgers with hash-chain verification
-- tamper-aware replay
+- tamper-aware replay and timeline rendering
 - typed hold/escalate/reject/accept decisions
 - schema-light intake validation
 - deterministic toy routing with visible reasons
+- claim lifecycle state machine (OPEN → ACTIVE → HELD | COMPLETE)
+- transition receipts with content-addressed IDs
+- claim receipt chains with deterministic recovery IDs
+- gate-first execution (admission receipt required before execution proceeds)
 - adversarial fixture tests
 - release/IP boundary documentation
 
@@ -36,12 +67,15 @@ future licensing posture are evaluated.
 
 ```text
 src/lcos_toy/
-  receipt.py       receipt record and digest logic
+  receipt.py       receipt record and content-addressed digest logic
   ledger.py        append-oriented JSONL ledger and verifier
-  decision.py      typed decision objects
+  decision.py      typed decision objects (ACCEPT/HOLD/REJECT/ESCALATE)
   intake.py        schema-light governed intake workbench
-  router.py        deterministic toy router with explanations
+  router.py        deterministic toy router with visible reasons
   replay.py        audit/replay timeline renderer
+  claim.py         claim state machine + TransitionReceipt emission
+  chain.py         ClaimReceiptChain with deterministic recovery_id
+  execution.py     RequestRecord → gate-first execution → ExecutionRecord
   cli.py           small command-line interface
 
 tests/
@@ -49,6 +83,9 @@ tests/
   test_intake.py
   test_router.py
   test_replay.py
+  test_claim.py
+  test_chain.py
+  test_execution.py
 
 schemas/
   receipt.schema.json
