@@ -31,9 +31,12 @@ class ClaimReceiptChain:
         if not all(r.claim_id == claim_id for r in ordered):
             mismatched = [r.claim_id for r in ordered if r.claim_id != claim_id]
             raise ValueError(f"receipt claim_id mismatch: {mismatched}")
+        # recovery_id is computed from receipt_ids only — those are content-addressed
+        # and timestamp-independent, so recovery_id is deterministic from the same
+        # sequence of operations regardless of when they run.
         chain_body = {
             "claim_id": claim_id,
-            "receipts": [r.to_dict() for r in ordered],
+            "receipt_ids": [r.receipt_id for r in ordered],
         }
         recovery_id = stable_digest(chain_body)
         return cls(claim_id=claim_id, receipts=ordered, recovery_id=recovery_id)
