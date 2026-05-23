@@ -1,7 +1,7 @@
-"""Tests for lcos_toy.claim — ClaimState machine and TransitionReceipt."""
+"""Tests for lcos_public.claim — ClaimState machine and TransitionReceipt."""
 import unittest
 
-from lcos_toy.claim import ClaimMachine, ClaimState, TransitionReceipt
+from lcos_public.claim import ClaimMachine, ClaimState, TransitionReceipt
 
 
 class TestClaimState(unittest.TestCase):

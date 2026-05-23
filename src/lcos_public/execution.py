@@ -4,10 +4,10 @@ The structural guarantee: a TransitionReceipt must exist before execution
 proceeds. If the admission check fails, a HOLD receipt is emitted and
 execution stops — it does not proceed and log afterward.
 
-This is the toy demonstration of the gate-first vs. post-hoc distinction
+This is the public demonstration of the gate-first vs. post-hoc distinction
 the paper argues. The gate check is structural, not observational.
 
-Public toy demonstration only.
+Public proof demonstration only.
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ class RequestRecord:
     actor: str
     action: str
     content: str
-    declared_scope: str = "toy"
+    declared_scope: str = "public"
     submitted_at: str = ""
 
     @classmethod
@@ -40,7 +40,7 @@ class RequestRecord:
         actor: str,
         action: str,
         content: str,
-        declared_scope: str = "toy",
+        declared_scope: str = "public",
         timestamp: str | None = None,
     ) -> "RequestRecord":
         return cls(
@@ -144,7 +144,7 @@ class GoverningExecutor:
                 reason=f"intake decision: {decision.reason}",
                 timestamp=timestamp,
             )
-            # Execute (toy: echo the content back)
+            # Execute (public demo: echo the content back)
             output = f"[executed] {request.action}: {request.content}"
             completion = machine.complete(
                 reason="execution finished",

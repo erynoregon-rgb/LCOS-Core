@@ -7,7 +7,7 @@ Receipt IDs are content-addressed: sha256 of the body before timestamp
 is added. Same claim_id + same body → same receipt_id. This makes
 receipt chains deterministic and reconstructible.
 
-Public toy demonstration only. Does not expose private SKOS internals.
+Public proof demonstration only. Does not expose private SKOS internals.
 """
 from __future__ import annotations
 

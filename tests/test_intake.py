@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import unittest
 
-from lcos_toy.intake import GovernedIntake, IntakeRequest
+from lcos_public.intake import GovernedIntake, IntakeRequest
 
 
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures" / "adversarial"
@@ -15,8 +15,8 @@ class IntakeTests(unittest.TestCase):
                 "request_id": "ok-1",
                 "actor": "tester",
                 "action": "summarize",
-                "content": "summarize public toy receipt",
-                "declared_scope": "toy",
+                "content": "summarize public receipt",
+                "declared_scope": "public",
             }
         )
         self.assertEqual(GovernedIntake().decide(request).kind, "ACCEPT")

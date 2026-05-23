@@ -23,7 +23,7 @@ class Route:
         return payload
 
 
-class ToyRouter:
+class PublicRouter:
     def __init__(self, capabilities: list[Capability]):
         self.capabilities = sorted(capabilities, key=lambda item: (-item.priority, item.kernel_id))
 
@@ -36,6 +36,5 @@ class ToyRouter:
                     capability.kernel_id,
                 )
         if "unknown" in lowered or "novel" in lowered:
-            return Route(Decision("ESCALATE", "no bounded toy kernel matches request"), None)
-        return Route(Decision("HOLD", "insufficient evidence to choose a bounded toy kernel"), None)
-
+            return Route(Decision("ESCALATE", "no bounded public kernel matches request"), None)
+        return Route(Decision("HOLD", "insufficient evidence to choose a bounded public kernel"), None)

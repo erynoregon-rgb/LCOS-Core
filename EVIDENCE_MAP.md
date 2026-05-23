@@ -3,7 +3,7 @@
 What is implemented, where to find it, and what the tests prove.
 
 All claims are limited to the contents of this repository.
-This is a toy demonstration package — see CLAIMS.md for the full boundary.
+This is a public proof package — see CLAIMS.md for the full boundary.
 
 ---
 
@@ -13,9 +13,9 @@ This is a toy demonstration package — see CLAIMS.md for the full boundary.
 
 | | |
 |---|---|
-| Implementation | `src/lcos_toy/receipt.py`, `src/lcos_toy/ledger.py` |
+| Implementation | `src/lcos_public/receipt.py`, `src/lcos_public/ledger.py` |
 | Tests | `tests/test_ledger.py` |
-| CLI demo | `python -m lcos_toy.cli demo-ledger` |
+| CLI demo | `python -m lcos_public.cli demo-ledger` |
 
 What the tests prove:
 - Valid chain verifies (`test_append_only_chain_verifies`)
@@ -31,9 +31,9 @@ What the tests prove:
 
 | | |
 |---|---|
-| Implementation | `src/lcos_toy/decision.py`, `src/lcos_toy/intake.py` |
+| Implementation | `src/lcos_public/decision.py`, `src/lcos_public/intake.py` |
 | Tests | `tests/test_intake.py` |
-| CLI demo | `python -m lcos_toy.cli demo-intake examples/requests/simple_accept.json` |
+| CLI demo | `python -m lcos_public.cli demo-intake examples/requests/simple_accept.json` |
 
 What the tests prove:
 - Valid requests accept
@@ -49,9 +49,9 @@ What the tests prove:
 
 | | |
 |---|---|
-| Implementation | `src/lcos_toy/router.py` |
+| Implementation | `src/lcos_public/router.py` |
 | Tests | `tests/test_router.py` |
-| CLI demo | `python -m lcos_toy.cli demo-route "summarize this receipt"` |
+| CLI demo | `python -m lcos_public.cli demo-route "summarize this receipt"` |
 
 What the tests prove:
 - Router is deterministic across calls
@@ -66,7 +66,7 @@ What the tests prove:
 
 | | |
 |---|---|
-| Implementation | `src/lcos_toy/claim.py` |
+| Implementation | `src/lcos_public/claim.py` |
 | Tests | `tests/test_claim.py` |
 
 States: `OPEN → ACTIVE → HELD | COMPLETE`
@@ -93,7 +93,7 @@ What the tests prove:
 
 | | |
 |---|---|
-| Implementation | `src/lcos_toy/chain.py` |
+| Implementation | `src/lcos_public/chain.py` |
 | Tests | `tests/test_chain.py` |
 
 What the tests prove:
@@ -112,7 +112,7 @@ This is a structural guarantee, not a logged observation after the fact.
 
 | | |
 |---|---|
-| Implementation | `src/lcos_toy/execution.py` |
+| Implementation | `src/lcos_public/execution.py` |
 | Tests | `tests/test_execution.py` |
 
 What the tests prove:
@@ -129,9 +129,9 @@ What the tests prove:
 
 | | |
 |---|---|
-| Implementation | `src/lcos_toy/replay.py` |
+| Implementation | `src/lcos_public/replay.py` |
 | Tests | `tests/test_replay.py` |
-| CLI demo | `python -m lcos_toy.cli replay <path-to-ledger.jsonl>` |
+| CLI demo | `python -m lcos_public.cli replay <path-to-ledger.jsonl>` |
 
 ---
 

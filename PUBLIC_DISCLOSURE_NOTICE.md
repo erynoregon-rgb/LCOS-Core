@@ -1,6 +1,6 @@
 # Public Disclosure Notice
 
-This repository is a public toy package.
+This repository is a public proof package.
 
 It is intended to demonstrate engineering discipline, testing rigor, and
 claim-safe release practices. It is not intended to disclose non-public system
@@ -19,4 +19,3 @@ details, production configuration, or private implementation advantage.
 
 See `LICENSE`. Public visibility does not grant copying, modification, or
 distribution rights beyond the current license posture.
-

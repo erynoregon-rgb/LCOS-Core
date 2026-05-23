@@ -33,7 +33,7 @@ AI-assisted teams often run into hidden workflow failures:
 
 ## Public proof surface
 
-LCOS-Core is my public reduced scaffold for governed agentic runtime primitives. It demonstrates mechanism classes such as append-oriented receipt ledgers, typed decisions, deterministic toy routing, replay, schema-light validation, adversarial fixtures, and explicit public/private claim boundaries.
+LCOS-Core is my public proof scaffold for governed agentic runtime primitives. It demonstrates mechanism classes such as append-oriented receipt ledgers, typed decisions, deterministic routing, replay, schema-light validation, adversarial fixtures, and explicit public/private claim boundaries.
 
 ## Private research substrate
 

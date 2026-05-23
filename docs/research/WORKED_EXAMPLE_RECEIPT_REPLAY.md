@@ -10,7 +10,7 @@ including what happens under tamper conditions.
 A `RequestRecord` captures what was requested before any execution begins.
 
 ```python
-from lcos_toy.execution import RequestRecord, GoverningExecutor
+from lcos_public.execution import RequestRecord, GoverningExecutor
 
 request = RequestRecord.create(
     request_id="req-demo-001",
@@ -72,8 +72,8 @@ the chain without access to the original execution environment.
 
 ```python
 # Rebuild from raw dicts — recovery_id must match
-from lcos_toy.claim import TransitionReceipt
-from lcos_toy.chain import ClaimReceiptChain
+from lcos_public.claim import TransitionReceipt
+from lcos_public.chain import ClaimReceiptChain
 
 rebuilt_receipts = [TransitionReceipt(**r) for r in chain_dict["receipts"]]
 rebuilt_chain = ClaimReceiptChain.build("req-demo-001", rebuilt_receipts)
@@ -86,7 +86,7 @@ assert rebuilt_chain.recovery_id == chain.recovery_id  # always true
 Receipts can be persisted to an append-only JSONL ledger for audit replay.
 
 ```python
-from lcos_toy.ledger import AppendOnlyLedger
+from lcos_public.ledger import AppendOnlyLedger
 import tempfile, pathlib
 
 with tempfile.TemporaryDirectory() as tmp:
@@ -106,7 +106,7 @@ with tempfile.TemporaryDirectory() as tmp:
 ## 5. Replay timeline
 
 ```python
-from lcos_toy.replay import render_timeline
+from lcos_public.replay import render_timeline
 
 print(render_timeline(path))
 ```
@@ -152,13 +152,13 @@ It is tamper-aware, not tamper-proof.
 r1 = TransitionReceipt.create(
     claim_id="req-demo-001", actor="demo-executor",
     from_state=ClaimState.OPEN, to_state=ClaimState.ACTIVE,
-    reason="intake decision: request is admissible in toy scope",
+    reason="intake decision: request is admissible in public scope",
     timestamp="2026-01-01T09:00:01+00:00",
 )
 r2 = TransitionReceipt.create(
     claim_id="req-demo-001", actor="demo-executor",
     from_state=ClaimState.OPEN, to_state=ClaimState.ACTIVE,
-    reason="intake decision: request is admissible in toy scope",
+    reason="intake decision: request is admissible in public scope",
     timestamp="2099-12-31T23:59:59+00:00",  # different timestamp
 )
 
@@ -172,7 +172,7 @@ wall-clock time.
 
 ## Claim boundary
 
-This worked example uses toy data and a toy executor. It demonstrates the
+This worked example uses public data and a public executor. It demonstrates the
 mechanism class. It does not claim:
 
 - production-grade adversary resistance

@@ -3,20 +3,19 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lcos-core-toy-public"
+name = "lcos-core-public-proof"
 version = "0.1.0"
-description = "Toy public LCOS primitives for receipt ledgers, governed intake, and deterministic routing"
+description = "Public proof-of-mechanism LCOS primitives for receipt ledgers, governed intake, and deterministic routing"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{name = "Eryn Eldvar"}]
 dependencies = []
 
 [project.scripts]
-lcos-toy = "lcos_toy.cli:main"
+lcos-public = "lcos_public.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-

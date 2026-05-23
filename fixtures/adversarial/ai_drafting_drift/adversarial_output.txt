@@ -1,0 +1,1 @@
+This substrate provides a generalized AI OS layer for auditable AI-assisted work.

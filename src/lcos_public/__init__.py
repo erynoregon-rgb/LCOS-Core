@@ -1,4 +1,4 @@
-"""Toy LCOS public primitives."""
+"""Public LCOS proof primitives."""
 
 from .claim import ClaimMachine, ClaimState, TransitionReceipt
 from .chain import ClaimReceiptChain
@@ -7,7 +7,7 @@ from .execution import ExecutionRecord, GoverningExecutor, RequestRecord
 from .intake import IntakeRequest, GovernedIntake
 from .ledger import AppendOnlyLedger
 from .receipt import Receipt
-from .router import Capability, ToyRouter
+from .router import Capability, PublicRouter
 
 __all__ = [
     "AppendOnlyLedger",
@@ -20,9 +20,8 @@ __all__ = [
     "GoverningExecutor",
     "GovernedIntake",
     "IntakeRequest",
+    "PublicRouter",
     "Receipt",
     "RequestRecord",
     "TransitionReceipt",
-    "ToyRouter",
 ]
-

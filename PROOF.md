@@ -9,7 +9,7 @@ This repository provides a reduced example of:
 - append-oriented receipt ledgers
 - hash-chain verification
 - typed decision states
-- deterministic toy routing
+- deterministic routing
 - replay and timeline rendering
 - schema-light intake validation
 - adversarial synthetic fixtures
@@ -33,8 +33,8 @@ Run:
 
 ```bash
 python -m unittest discover -s tests
-python -m lcos_toy.cli demo-ledger
-python -m lcos_toy.cli demo-route "audit this receipt"
+python -m lcos_public.cli demo-ledger
+python -m lcos_public.cli demo-route "audit this receipt"
 ```
 
 ## Claim boundary

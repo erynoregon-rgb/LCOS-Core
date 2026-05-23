@@ -1,0 +1,9 @@
+{
+  "hold_code": "HOLD_CONTRACT_VIOLATION",
+  "deliverable_blocked": true,
+  "failed_constraints": ["forbidden_terms_absent"],
+  "forbidden_terms_found": ["AI OS", "substrate"],
+  "next_actor": "user",
+  "resume_condition": "corrected deliverable passes gate",
+  "nothing_promoted": true
+}

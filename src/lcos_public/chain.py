@@ -3,7 +3,7 @@
 Same claim_id + same receipts (in same order) → same recovery_id.
 This is the paper's C4 claim: the chain is deterministic and reconstructible.
 
-Public toy demonstration only.
+Public proof demonstration only.
 """
 from __future__ import annotations
 

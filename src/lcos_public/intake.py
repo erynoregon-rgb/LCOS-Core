@@ -12,7 +12,7 @@ class IntakeRequest:
     actor: str
     action: str
     content: str
-    declared_scope: str = "toy"
+    declared_scope: str = "public"
 
     @classmethod
     def from_payload(cls, payload: dict[str, Any]) -> "IntakeRequest":
@@ -24,7 +24,7 @@ class IntakeRequest:
             actor=str(payload["actor"]),
             action=str(payload["action"]),
             content=str(payload["content"]),
-            declared_scope=str(payload.get("declared_scope", "toy")),
+            declared_scope=str(payload.get("declared_scope", "public")),
         )
 
 
@@ -35,10 +35,9 @@ class GovernedIntake:
     def decide(self, request: IntakeRequest) -> Decision:
         text = f"{request.action} {request.content}".lower()
         if any(term in text for term in self.blocked_terms):
-            return Decision("REJECT", "request contains blocked toy-safety term", (request.request_id,))
+            return Decision("REJECT", "request contains blocked public-safety term", (request.request_id,))
         if any(term in text for term in self.ambiguous_terms):
             return Decision("HOLD", "request needs more context before execution", (request.request_id,))
-        if request.declared_scope != "toy":
-            return Decision("ESCALATE", "scope is outside public toy boundary", (request.request_id,))
-        return Decision("ACCEPT", "request is admissible in toy scope", (request.request_id,))
-
+        if request.declared_scope != "public":
+            return Decision("ESCALATE", "scope is outside public boundary", (request.request_id,))
+        return Decision("ACCEPT", "request is admissible in public scope", (request.request_id,))

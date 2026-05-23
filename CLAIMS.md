@@ -1,6 +1,6 @@
 # Claim Safety
 
-This toy package uses strict public-claim boundaries.
+This public proof package uses strict public-claim boundaries.
 
 LCOS-Core is a public reduced scaffold and proof-of-mechanism surface. It is
 not the private SKOS system, and it is not a claim of general safety or
@@ -19,17 +19,17 @@ production reliability.
 
 ## Safe claims
 
-- The toy ledger detects simple receipt-chain tampering in an append-oriented JSONL log.
-- The toy intake workbench produces accept/hold/reject decisions.
-- The toy router is deterministic and returns visible reasons.
-- The toy replay tool renders a timeline from receipt JSONL.
+- The receipt ledger detects simple receipt-chain tampering in an append-oriented JSONL log.
+- The intake workbench produces accept/hold/reject decisions.
+- The router is deterministic and returns visible reasons.
+- The replay tool renders a timeline from receipt JSONL.
 - The public positioning packet describes a fundable public scaffold, not the
   private substrate.
 
 ## Unsafe claims
 
 - Do not claim this package implements the private SKOS system.
-- Do not claim production routing quality from the toy router.
+- Do not claim production routing quality from the router.
 - Do not claim patent coverage from this repository alone.
 - Do not claim real operational validation from synthetic fixtures.
 - Do not claim the ledger is OS-enforced immutable or cryptographically signed.

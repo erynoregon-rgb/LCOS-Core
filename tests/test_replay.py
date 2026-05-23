@@ -2,8 +2,8 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from lcos_toy.ledger import AppendOnlyLedger
-from lcos_toy.replay import render_timeline
+from lcos_public.ledger import AppendOnlyLedger
+from lcos_public.replay import render_timeline
 
 
 class ReplayTests(unittest.TestCase):

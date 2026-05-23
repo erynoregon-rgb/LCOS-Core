@@ -1,7 +1,7 @@
 {
-  "request_id": "toy-reject-001",
+  "request_id": "public-reject-001",
   "actor": "public-demo",
   "action": "execute",
-  "content": "Run a toy action but use private trace context.",
-  "declared_scope": "production"
+  "content": "Run a public action but use private trace context.",
+  "declared_scope": "public"
 }

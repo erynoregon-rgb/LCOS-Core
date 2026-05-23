@@ -11,17 +11,17 @@ pip install -e .
 ## Run the demos
 
 ```bash
-python -m lcos_toy.cli demo-ledger
+python -m lcos_public.cli demo-ledger
 ```
 Expected: a hash-linked receipt timeline printed to stdout, ending with `valid=true count=2 issues=0`
 
 ```bash
-python -m lcos_toy.cli demo-intake examples/requests/simple_accept.json
+python -m lcos_public.cli demo-intake examples/requests/simple_accept.json
 ```
-Expected: `{"kind": "ACCEPT", "reason": "request is admissible in toy scope", ...}`
+Expected: `{"kind": "ACCEPT", "reason": "request is admissible in public scope", ...}`
 
 ```bash
-python -m lcos_toy.cli demo-route "summarize this audit receipt"
+python -m lcos_public.cli demo-route "summarize this audit receipt"
 ```
 Expected: `{"kind": "ACCEPT", "kernel_id": "receipt-kernel", "reason": "matched capability: receipt", ...}`
 
@@ -35,7 +35,7 @@ Expected: 48 tests pass across ledger, intake, router, replay, claim, chain, and
 ## Try the full path
 
 ```python
-from lcos_toy.execution import RequestRecord, GoverningExecutor
+from lcos_public.execution import RequestRecord, GoverningExecutor
 
 request = RequestRecord.create(
     request_id="qs-001",

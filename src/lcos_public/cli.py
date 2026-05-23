@@ -7,16 +7,17 @@ import tempfile
 
 from .intake import GovernedIntake, IntakeRequest
 from .ledger import AppendOnlyLedger
+from .publication import export_public_paper_surface
 from .replay import render_timeline
-from .router import Capability, ToyRouter
+from .router import Capability, PublicRouter
 
 
 def demo_ledger() -> int:
     with tempfile.TemporaryDirectory() as tmp:
-        ledger_path = Path(tmp) / "toy-ledger.jsonl"
+        ledger_path = Path(tmp) / "public-ledger.jsonl"
         ledger = AppendOnlyLedger(ledger_path)
         ledger.append("INTAKE", {"request_id": "demo-1", "action": "summarize"}, timestamp="2026-01-01T00:00:00+00:00")
-        ledger.append("DECISION", {"kind": "ACCEPT", "reason": "toy demo"}, timestamp="2026-01-01T00:00:01+00:00")
+        ledger.append("DECISION", {"kind": "ACCEPT", "reason": "public demo"}, timestamp="2026-01-01T00:00:01+00:00")
         print(render_timeline(ledger_path))
     return 0
 
@@ -30,7 +31,7 @@ def demo_intake(path: str) -> int:
 
 
 def demo_route(text: str) -> int:
-    router = ToyRouter(
+    router = PublicRouter(
         [
             Capability("receipt-kernel", "receipt", priority=10),
             Capability("audit-kernel", "audit", priority=8),
@@ -53,8 +54,25 @@ def replay(path: str) -> int:
     return 0
 
 
+def export_paper(source: str, destination: str) -> int:
+    result = export_public_paper_surface(Path(source), Path(destination))
+    print(
+        json.dumps(
+            {
+                "source_root": str(result.source_root),
+                "destination_root": str(result.destination_root),
+                "exported_files": result.exported_files,
+                "redacted_lines": result.redacted_lines,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="LCOS toy public demo CLI")
+    parser = argparse.ArgumentParser(description="LCOS public demo CLI")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("demo-ledger")
     intake = sub.add_parser("demo-intake")
@@ -65,6 +83,9 @@ def main(argv: list[str] | None = None) -> int:
     check.add_argument("path")
     replay_parser = sub.add_parser("replay")
     replay_parser.add_argument("path")
+    export_parser = sub.add_parser("export-paper")
+    export_parser.add_argument("source")
+    export_parser.add_argument("destination")
     args = parser.parse_args(argv)
 
     if args.command == "demo-ledger":
@@ -77,9 +98,10 @@ def main(argv: list[str] | None = None) -> int:
         return verify(args.path)
     if args.command == "replay":
         return replay(args.path)
+    if args.command == "export-paper":
+        return export_paper(args.source, args.destination)
     raise AssertionError(args.command)
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

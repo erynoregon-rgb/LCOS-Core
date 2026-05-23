@@ -1,17 +1,17 @@
 # Public Scope
 
-Public LCOS toy scope includes:
+Public LCOS scope includes:
 
 - receipt models
 - append-oriented storage with hash-chain verification
 - schema-light validators
 - typed decision objects
 - hold/escalate/reject flows
-- deterministic toy routing
+- deterministic routing
 - replay and timeline rendering
 - adversarial synthetic fixtures
 
-Public LCOS toy scope excludes:
+Public LCOS scope excludes:
 
 - SKOS source code
 - private strategy documents

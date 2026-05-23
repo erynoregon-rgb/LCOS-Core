@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "ToyIntakeRequest",
+  "title": "PublicIntakeRequest",
   "type": "object",
   "required": ["request_id", "actor", "action", "content"],
   "properties": {
@@ -11,4 +11,3 @@
     "declared_scope": {"type": "string"}
   }
 }
-

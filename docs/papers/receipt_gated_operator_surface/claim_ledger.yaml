@@ -1,0 +1,116 @@
+schema_version: "1.0"
+paper: "Verifying Claims About AI Systems: A Receipt-Gated Operator Surface for Operationalising Governance"
+revision: "A2 public surface"
+claim_safety_tag_legend:
+  VERIFIED: "Code exists + passing tests confirmed in the review pass"
+  REPO_IMPLEMENTED: "Code exists; implementation confirmed by reading source"
+  SPECIFIED: "Design or contract artifact only; no confirmed implementation"
+  HYPOTHESIS: "Motivation or interpretation; evidence not claimed as a result"
+  REMOVE: "Claim cannot be supported and should not appear as a result"
+
+claims:
+  - claim_id: C1-append-only
+    section: "§2 (Mechanism)"
+    claim_text: "Receipts are appended to an immutable log; no receipt can be overwritten or deleted without detection."
+    claim_safety_tag: VERIFIED
+    evidence_path: "src/skos_core/governance/receipt_store.py"
+    test_path: "tests/governance/test_receipt_first_model.py"
+    action: keep
+
+  - claim_id: C2-hash-chain
+    section: "§2 (Mechanism)"
+    claim_text: "In the canonical receipt layer, the receipt ledger is hash-chained; tampering with any entry breaks the chain at that position."
+    claim_safety_tag: REPO_IMPLEMENTED
+    evidence_path: "src/skos_core/runtime/receipt_kernel.py"
+    test_path: null
+    action: keep
+
+  - claim_id: C3-content-addressed
+    section: "§2 (Mechanism)"
+    claim_text: "In the canonical receipt layer, receipt_id is content-addressed: identical inputs produce identical identifiers, enabling independent verification."
+    claim_safety_tag: REPO_IMPLEMENTED
+    evidence_path: "src/skos_core/runtime/receipt_kernel.py"
+    test_path: null
+    action: keep
+
+  - claim_id: C4-deterministic-reconstruction
+    section: "§2 (Mechanism) and §5 (Governance Mapping)"
+    claim_text: "A reviewer can reconstruct the full execution evidence deterministically from the repository without re-running the system."
+    claim_safety_tag: VERIFIED
+    evidence_path: "src/skos_core/audit/reader.py"
+    test_path: "tests/audit/test_reader.py"
+    action: keep
+
+  - claim_id: C5-gate-first
+    section: "§1 (Introduction), §2 (Mechanism)"
+    claim_text: "Receipt emission is part of the operator surface, not post-hoc audit logging."
+    claim_safety_tag: REPO_IMPLEMENTED
+    evidence_path: "tools/inference/tui_advisory_runner.py"
+    test_path: "tests/inference/test_tui_advisory_runner.py"
+    action: keep
+
+  - claim_id: C6-admission-receipt-required
+    section: "§2 (Mechanism)"
+    claim_text: "Execution requires a prior admission receipt; without it, the gate does not open."
+    claim_safety_tag: REPO_IMPLEMENTED
+    evidence_path: "tools/inference/tui_advisory_runner.py"
+    test_path: "tests/inference/test_tui_advisory_runner.py"
+    action: keep
+
+  - claim_id: C7-hold-recorded
+    section: "§2 (Mechanism)"
+    claim_text: "HOLD decisions are recorded with typed codes; a HOLD is not silently dropped from the evidentiary record."
+    claim_safety_tag: VERIFIED
+    evidence_path: "var/coordination/gitops/receipts/20260506T032156Z-a7c52f237c9e.json"
+    test_path: "tests/governance/test_receipt_first_model.py"
+    action: keep
+
+  - claim_id: C8-bounded-schema
+    section: "§2 (Mechanism)"
+    claim_text: "The operator surface is bounded: the request and result schemas use additionalProperties: false, preventing undeclared fields."
+    claim_safety_tag: REPO_IMPLEMENTED
+    evidence_path: "schemas/inference/tui_advisory_request.v1.schema.json"
+    test_path: null
+    action: keep
+
+  - claim_id: C9-real-receipts-exist
+    section: "§3 (Worked Example)"
+    claim_text: "The system has produced real receipts in the repository."
+    claim_safety_tag: VERIFIED
+    evidence_path: "var/coordination/gitops/receipts/"
+    test_path: null
+    action: keep
+
+  - claim_id: C10-post-hoc-counterfactual
+    section: "§3 (Worked Example)"
+    claim_text: "If an agent fabricates a completion claim without executing, the absence of a receipt is detectable."
+    claim_safety_tag: HYPOTHESIS
+    evidence_path: "src/skos_core/audit/reader.py"
+    test_path: null
+    action: keep
+
+  - claim_id: C14-verification-without-trust
+    section: "§1 (Introduction), §5 (Governance Mapping)"
+    claim_text: "A reviewer can verify a claim without trusting the agent's own narration of the execution."
+    claim_safety_tag: HYPOTHESIS
+    evidence_path: "src/skos_core/audit/reader.py"
+    test_path: null
+    action: keep
+
+  - claim_id: C15-one-operator-surface
+    section: "Abstract, §1 (Introduction)"
+    claim_text: "One operator surface can preserve enough execution evidence to support post-hoc verification."
+    claim_safety_tag: REPO_IMPLEMENTED
+    evidence_path: "tools/inference/tui_advisory_runner.py"
+    test_path: "tests/inference/test_tui_advisory_runner.py"
+    action: keep
+
+summary:
+  verified: 4
+  repo_implemented: 6
+  hypothesis: 2
+  remove: 0
+  revision_rules:
+    - "Treat unsupported interpretive claims as hypotheses, not results."
+    - "Scope content-addressing and hash-chain claims to the canonical receipt layer."
+    - "Treat the public package as a research draft plus evidence bundle."

@@ -1,6 +1,6 @@
 # Release Intent
 
-This package is a toy public release that shows engineering discipline without
+This package is a public release that shows engineering discipline without
 publishing private advantage.
 
 ## Public intent

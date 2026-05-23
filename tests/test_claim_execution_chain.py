@@ -8,9 +8,9 @@ It serves as the single-file demonstration of the paper's core mechanism:
 """
 import unittest
 
-from lcos_toy.chain import ClaimReceiptChain
-from lcos_toy.claim import ClaimState, TransitionReceipt
-from lcos_toy.execution import ExecutionRecord, GoverningExecutor, RequestRecord
+from lcos_public.chain import ClaimReceiptChain
+from lcos_public.claim import ClaimState, TransitionReceipt
+from lcos_public.execution import ExecutionRecord, GoverningExecutor, RequestRecord
 
 
 FIXED_TS = "2026-01-01T00:00:00+00:00"

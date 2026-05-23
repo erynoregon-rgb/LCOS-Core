@@ -1,4 +1,4 @@
-# LCOS-Core Toy Public Package
+# LCOS-Core Public Proof Package
 
 AI agents make claims about what they did. This is infrastructure for verifying
 those claims without trusting the agent's account.
@@ -15,7 +15,7 @@ those two.
 This is the self-contained public layer of a larger private research program.
 The part that can be cloned, run, and inspected independently.
 
-This package demonstrates a bounded toy implementation of receipt-gated governance
+This package demonstrates a bounded public proof implementation of receipt-gated governance
 primitives: append-oriented receipt logs, tamper-aware replay, typed decision states,
 claim lifecycle with transition receipts, gate-first execution, and public/private
 disclosure boundaries.
@@ -24,16 +24,16 @@ disclosure boundaries.
 
 ```bash
 python -m pip install -e .
-python -m lcos_toy.cli demo-ledger
-python -m lcos_toy.cli demo-intake examples/requests/simple_accept.json
-python -m lcos_toy.cli demo-route "summarize this audit receipt"
+python -m lcos_public.cli demo-ledger
+python -m lcos_public.cli demo-intake examples/requests/simple_accept.json
+python -m lcos_public.cli demo-route "summarize this audit receipt"
 python -m unittest discover -s tests
 ```
 
 Expected results:
 
 - `demo-ledger` — prints a hash-linked receipt timeline and confirms `valid=true`
-- `demo-intake` — returns `{"kind": "ACCEPT", ...}` for a well-formed toy request
+- `demo-intake` — returns `{"kind": "ACCEPT", ...}` for a well-formed public request
 - `demo-route` — returns a deterministic kernel routing decision with a visible reason
 - `tests` — all pass
 
@@ -48,7 +48,7 @@ This package demonstrates:
 - tamper-aware replay and timeline rendering
 - typed hold/escalate/reject/accept decisions
 - schema-light intake validation
-- deterministic toy routing with visible reasons
+- deterministic routing with visible reasons
 - claim lifecycle state machine (OPEN → ACTIVE → HELD | COMPLETE)
 - transition receipts with content-addressed IDs
 - claim receipt chains with deterministic recovery IDs
@@ -67,7 +67,7 @@ It intentionally does not include:
 
 Public equals mechanism class. Private equals mechanism advantage.
 
-This toy repository is a reduced example for review, hiring, grant, and
+This public proof repository is a reduced example for review, hiring, grant, and
 research-facing evaluation. It is not the full private system and should not be
 read as a publication of the decisive internal strategy.
 
@@ -77,12 +77,12 @@ future licensing posture are evaluated.
 ## Layout
 
 ```text
-src/lcos_toy/
+src/lcos_public/
   receipt.py       receipt record and content-addressed digest logic
   ledger.py        append-oriented JSONL ledger and verifier
   decision.py      typed decision objects (ACCEPT/HOLD/REJECT/ESCALATE)
   intake.py        schema-light governed intake workbench
-  router.py        deterministic toy router with visible reasons
+  router.py        deterministic router with visible reasons
   replay.py        audit/replay timeline renderer
   claim.py         claim state machine + TransitionReceipt emission
   chain.py         ClaimReceiptChain with deterministic recovery_id
@@ -127,9 +127,9 @@ docs/research/
 
 ```bash
 python -m pip install -e .
-python -m lcos_toy.cli demo-ledger
-python -m lcos_toy.cli demo-intake examples/requests/simple_accept.json
-python -m lcos_toy.cli demo-route "summarize this audit receipt"
+python -m lcos_public.cli demo-ledger
+python -m lcos_public.cli demo-intake examples/requests/simple_accept.json
+python -m lcos_public.cli demo-route "summarize this audit receipt"
 python -m unittest discover -s tests
 ```
 

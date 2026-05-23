@@ -1,8 +1,8 @@
-"""Tests for lcos_toy.chain — ClaimReceiptChain and deterministic recovery_id (C4)."""
+"""Tests for lcos_public.chain — ClaimReceiptChain and deterministic recovery_id (C4)."""
 import unittest
 
-from lcos_toy.claim import ClaimMachine, ClaimState, TransitionReceipt
-from lcos_toy.chain import ClaimReceiptChain
+from lcos_public.claim import ClaimMachine, ClaimState, TransitionReceipt
+from lcos_public.chain import ClaimReceiptChain
 
 
 def _make_receipts(claim_id: str) -> tuple[TransitionReceipt, ...]:

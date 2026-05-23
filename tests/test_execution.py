@@ -1,7 +1,7 @@
-"""Tests for lcos_toy.execution — gate-first execution pattern."""
+"""Tests for lcos_public.execution — gate-first execution pattern."""
 import unittest
 
-from lcos_toy.execution import GoverningExecutor, RequestRecord
+from lcos_public.execution import GoverningExecutor, RequestRecord
 
 
 def _request(
@@ -10,7 +10,7 @@ def _request(
     actor: str = "test-actor",
     action: str = "summarize",
     content: str = "a valid request",
-    declared_scope: str = "toy",
+    declared_scope: str = "public",
     timestamp: str = "2026-01-01T00:00:00+00:00",
 ) -> RequestRecord:
     return RequestRecord.create(

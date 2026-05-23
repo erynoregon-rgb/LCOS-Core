@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "ToyRoutingDecision",
+  "title": "PublicRoutingDecision",
   "type": "object",
   "required": ["kind", "reason", "evidence", "kernel_id"],
   "properties": {
@@ -10,4 +10,3 @@
     "kernel_id": {"type": ["string", "null"]}
   }
 }
-

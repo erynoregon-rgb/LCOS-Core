@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from lcos_toy.ledger import AppendOnlyLedger
+from lcos_public.ledger import AppendOnlyLedger
 
 
 class LedgerTests(unittest.TestCase):

@@ -1,0 +1,16 @@
+# Adversarial fixture: AI drafting drift
+#
+# A declared prompt contract for a public-facing draft. The contract is
+# fixed before generation; the gate uses it to detect drift after the
+# model produces output.
+#
+# This fixture demonstrates the mechanism, not the full portable gate.
+
+mode: draft
+deliverable: one-paragraph research agenda statement
+claim_source: LCOS-Core repository (public)
+forbidden_terms:
+  - AI OS
+  - substrate
+  - SKOS-Core
+stop_after: end of first paragraph

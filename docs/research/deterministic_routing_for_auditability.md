@@ -1,7 +1,7 @@
 # Deterministic Routing for Auditability
 
 Soft routing can be useful, but it is difficult to audit when decisions vary
-across runs. A deterministic toy router makes routing behavior reviewable:
+across runs. A deterministic router makes routing behavior reviewable:
 
 - capabilities are explicit
 - priorities are visible
@@ -10,4 +10,3 @@ across runs. A deterministic toy router makes routing behavior reviewable:
 
 The router in this package is intentionally weak. It demonstrates audit shape,
 not production routing advantage.
-

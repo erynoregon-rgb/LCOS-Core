@@ -1,6 +1,6 @@
 # SKOS to LCOS Boundary
 
-LCOS Toy is public. SKOS remains private.
+LCOS is public. SKOS remains private.
 
 ## Shared at concept level
 
@@ -21,5 +21,5 @@ LCOS Toy is public. SKOS remains private.
 
 ## Boundary check
 
-LCOS Toy code imports only `lcos_toy` modules and Python standard library
+LCOS code imports only `lcos_public` modules and Python standard library
 modules. There are no SKOS dependencies.

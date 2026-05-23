@@ -23,7 +23,7 @@ LCOS-Core is my public reduced scaffold. It demonstrates mechanism classes such 
 
 - append-oriented receipt ledgers
 - typed hold / escalate / reject / accept decisions
-- deterministic toy routing with visible reasons
+- deterministic routing with visible reasons
 - replay and timeline rendering
 - schema-light validation
 - adversarial synthetic fixtures

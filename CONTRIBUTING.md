@@ -2,7 +2,7 @@
 
 Thank you for your interest.
 
-This repository is currently maintained as a controlled toy public package.
+This repository is currently maintained as a controlled public proof package.
 
 ## Current contribution posture
 
@@ -15,4 +15,4 @@ This repository is currently maintained as a controlled toy public package.
 - Keep claims narrow and evidence-backed.
 - Prefer synthetic examples over operational data.
 - Do not add non-public system details.
-- Do not widen the repo from toy package to production claims.
+- Do not widen the repo from public proof package to production claims.

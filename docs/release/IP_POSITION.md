@@ -1,6 +1,6 @@
 # IP Position
 
-This toy repository is prepared under an `All rights reserved` placeholder.
+This repository is prepared under an `All rights reserved` placeholder.
 
 ## Current posture
 
@@ -25,4 +25,3 @@ Publishing this package is a public disclosure of the included files. It is not
 a disclosure of the private system, private traces, or private strategy.
 
 This document is not legal advice.
-

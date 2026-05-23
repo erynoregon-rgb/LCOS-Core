@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "ToyReceiptRecord",
+  "title": "PublicReceiptRecord",
   "type": "object",
   "required": ["receipt", "payload"],
   "properties": {
@@ -11,4 +11,3 @@
     "payload": {"type": "object"}
   }
 }
-

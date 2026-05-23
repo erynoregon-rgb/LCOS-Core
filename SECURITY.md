@@ -1,6 +1,6 @@
 # Security
 
-This repository is a toy public package and does not make production security
+This repository is a public proof package and does not make production security
 claims.
 
 ## Scope
@@ -12,11 +12,10 @@ claims.
 
 ## Reporting
 
-If you find an issue in this toy package, report it privately to the repository
+If you find an issue in this proof package, report it privately to the repository
 owner instead of opening a public exploit writeup first.
 
 ## Non-goals
 
 This package is not a production-grade security product. Treat it as a review
 artifact and educational scaffold.
-
