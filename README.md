@@ -6,6 +6,11 @@ those claims without trusting the agent's account.
 The system is not asking whether an AI sounds trustworthy. It asks whether the
 claim can be reconstructed from custody records, gate decisions, and receipts.
 
+LCOS is intentionally small. It is not a full agent runtime, not a general
+governance platform, and not the private SKOS substrate. It is a public proof
+artifact for testing whether typed evidence contracts can block unsupported
+AI-assisted claims before downstream admission.
+
 LCOS-Core demonstrates the two underlying primitives: chain of custody (what
 happened, in what order, with what evidence) and control plane (who may act,
 through which surface, under which gate). Everything else — typed decisions,

@@ -1,0 +1,5 @@
+{
+  "event_type": "EXECUTION_ACCEPTED",
+  "deliverable_released": true,
+  "nothing_promoted_without_receipt": true
+}

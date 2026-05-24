@@ -1,0 +1,87 @@
+schema_version: "1.0"
+paper: "Typed Evidence Contracts for Blocking Unsupported AI-Assisted Claims"
+revision: "LCOS-native proof pair"
+claim_safety_tag_legend:
+  VERIFIED: "LCOS-local code plus passing tests"
+  REPO_IMPLEMENTED: "LCOS-local implementation exists"
+  SPECIFIED: "Documented design or fixture contract"
+  HYPOTHESIS: "Interpretive claim or future evidence need"
+  REMOVE: "Unsupported claim; should not appear as a result"
+
+claims:
+  - claim_id: L1-adversarial-hold
+    section: "3. Worked Fixture"
+    claim_text: "An unsupported draft using forbidden language is converted into HOLD_CONTRACT_VIOLATION and does not receive downstream admission."
+    claim_safety_tag: VERIFIED
+    evidence_path: "fixtures/adversarial/ai_drafting_drift/"
+    test_path: "tests/test_ai_drafting_drift_fixture.py"
+    action: keep
+
+  - claim_id: L2-grounded-accept
+    section: "3. Worked Fixture"
+    claim_text: "A grounded draft satisfying the contract receives an EXECUTION_ACCEPTED receipt."
+    claim_safety_tag: VERIFIED
+    evidence_path: "fixtures/adversarial/grounded_accept/"
+    test_path: "tests/test_ai_drafting_drift_fixture.py"
+    action: keep
+
+  - claim_id: L3-ledger-replay
+    section: "2. LCOS Mechanism"
+    claim_text: "LCOS records HOLD and accepted outcomes in an append-only ledger and renders a replayable timeline."
+    claim_safety_tag: VERIFIED
+    evidence_path: "src/lcos_public/ledger.py; src/lcos_public/replay.py"
+    test_path: "tests/test_ai_drafting_drift_fixture.py"
+    action: keep
+
+  - claim_id: L4-public-proof-artifact
+    section: "2. LCOS Mechanism"
+    claim_text: "LCOS is a bounded public proof artifact whose claims must be inspectable from LCOS-local files."
+    claim_safety_tag: SPECIFIED
+    evidence_path: "README.md; PROOF.md; docs/release/PUBLIC_SCOPE.md"
+    test_path: null
+    action: keep
+
+  - claim_id: L5-classifier-framing
+    section: "4. What This Proves"
+    claim_text: "The proof pair is stronger than rejection alone because it distinguishes grounded from unsupported transition attempts."
+    claim_safety_tag: HYPOTHESIS
+    evidence_path: "tests/test_ai_drafting_drift_fixture.py"
+    test_path: null
+    action: keep
+
+  - claim_id: L6-polished-vs-grounded
+    section: "1. Problem"
+    claim_text: "A polished unsupported claim is worse than an awkward grounded claim."
+    claim_safety_tag: HYPOTHESIS
+    evidence_path: "docs/papers/lcos_typed_evidence_contracts/paper.md"
+    test_path: null
+    action: keep
+
+  - claim_id: L7-hold-first-class
+    section: "2. LCOS Mechanism"
+    claim_text: "HOLD is a first-class outcome, not an error."
+    claim_safety_tag: SPECIFIED
+    evidence_path: "fixtures/adversarial/ai_drafting_drift/expected_hold.json"
+    test_path: "tests/test_ai_drafting_drift_fixture.py"
+    action: keep
+
+  - claim_id: L8-local-only-citation
+    section: "6. Relation to the SKOS-Derived Receipt-Gated Operator Surface Draft"
+    claim_text: "This LCOS-native note cites only LCOS-local files and tests."
+    claim_safety_tag: VERIFIED
+    evidence_path: "docs/papers/lcos_typed_evidence_contracts/"
+    test_path: "tests/test_ai_drafting_drift_fixture.py"
+    action: keep
+
+summary:
+  verified: 4
+  repo_implemented: 0
+  specified: 2
+  hypothesis: 2
+  remove: 0
+
+non_claims:
+  - "This does not prove semantic truth."
+  - "This does not prove production readiness, adversarial hardening, cryptographic attestation, or general AI safety."
+  - "This does not prove prose quality; style and polish are downstream concerns."
+  - "This does not disclose or require private SKOS internals."

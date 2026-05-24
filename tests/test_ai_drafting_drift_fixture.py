@@ -27,7 +27,8 @@ from lcos_public.ledger import AppendOnlyLedger
 from lcos_public.replay import render_timeline
 
 
-FIXTURE_DIR = Path(__file__).resolve().parents[1] / "fixtures" / "adversarial" / "ai_drafting_drift"
+ADVERSARIAL_FIXTURE_DIR = Path(__file__).resolve().parents[1] / "fixtures" / "adversarial" / "ai_drafting_drift"
+GROUNDED_FIXTURE_DIR = Path(__file__).resolve().parents[1] / "fixtures" / "adversarial" / "grounded_accept"
 
 
 def _load_contract_yaml(path: Path) -> dict:
@@ -101,9 +102,12 @@ class AiDraftingDriftFixtureTests(unittest.TestCase):
     """End-to-end chain assertion for the AI-drafting-drift fixture."""
 
     def setUp(self) -> None:
-        self.contract = _load_contract_yaml(FIXTURE_DIR / "contract.yaml")
-        self.adversarial = (FIXTURE_DIR / "adversarial_output.txt").read_text(encoding="utf-8")
-        self.expected_hold = json.loads((FIXTURE_DIR / "expected_hold.json").read_text(encoding="utf-8"))
+        self.contract = _load_contract_yaml(ADVERSARIAL_FIXTURE_DIR / "contract.yaml")
+        self.adversarial = (ADVERSARIAL_FIXTURE_DIR / "adversarial_output.txt").read_text(encoding="utf-8")
+        self.expected_hold = json.loads((ADVERSARIAL_FIXTURE_DIR / "expected_hold.json").read_text(encoding="utf-8"))
+        self.grounded_contract = _load_contract_yaml(GROUNDED_FIXTURE_DIR / "contract.yaml")
+        self.grounded = (GROUNDED_FIXTURE_DIR / "grounded_output.txt").read_text(encoding="utf-8")
+        self.expected_accept = json.loads((GROUNDED_FIXTURE_DIR / "expected_accept.json").read_text(encoding="utf-8"))
 
     def test_contract_loads_with_declared_fields(self) -> None:
         self.assertEqual(self.contract["mode"], "draft")
@@ -185,6 +189,44 @@ class AiDraftingDriftFixtureTests(unittest.TestCase):
 
             self.assertIn("DRAFT_INTAKE", timeline)
             self.assertIn("CONTRACT_HOLD", timeline)
+            self.assertIn("valid=true", timeline)
+
+    def test_grounded_output_is_admitted_with_receipt(self) -> None:
+        """The positive fixture proves the gate admits grounded, bounded text."""
+        result = _run_gate(self.grounded_contract, self.grounded)
+        self.assertEqual(result["verdict"], "VALID")
+        self.assertEqual(result["constraint_check"]["forbidden_terms_absent"], "pass")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger_path = Path(tmp) / "ledger.jsonl"
+            ledger = AppendOnlyLedger(ledger_path)
+            draft_id = "grounded_accept_001"
+
+            ledger.append(
+                "DRAFT_INTAKE",
+                {"draft_id": draft_id, "contract_mode": self.grounded_contract["mode"]},
+                timestamp="2026-01-01T00:00:00+00:00",
+            )
+            ledger.append(
+                self.expected_accept["event_type"],
+                {
+                    "draft_id": draft_id,
+                    "deliverable_released": self.expected_accept["deliverable_released"],
+                    "nothing_promoted_without_receipt": self.expected_accept["nothing_promoted_without_receipt"],
+                },
+                timestamp="2026-01-01T00:00:01+00:00",
+            )
+
+            event_types = [r["receipt"]["event_type"] for r in ledger.records()]
+            self.assertIn("EXECUTION_ACCEPTED", event_types)
+            self.assertNotIn("CONTRACT_HOLD", event_types)
+
+            report = ledger.verify()
+            self.assertTrue(report.valid, msg=f"ledger verification failed: {report.issues}")
+
+            timeline = render_timeline(ledger_path)
+            self.assertIn("DRAFT_INTAKE", timeline)
+            self.assertIn("EXECUTION_ACCEPTED", timeline)
             self.assertIn("valid=true", timeline)
 
 

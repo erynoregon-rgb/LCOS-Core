@@ -8,6 +8,8 @@ implementation.
 
 ## Public paper packages
 
+- [Typed Evidence Contracts](lcos_typed_evidence_contracts/README.md) —
+  LCOS-native proof note with adversarial and grounded fixtures
 - [Receipt-Gated Operator Surface](receipt_gated_operator_surface/README.md) —
   public draft, worked example, evidence map, claim ledger, publication note,
   and venue-fit matrix

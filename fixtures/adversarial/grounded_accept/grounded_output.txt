@@ -1,0 +1,1 @@
+LCOS demonstrates a bounded public proof for typed evidence contracts: an AI-assisted draft is checked against declared terms before it can become downstream state, and unsupported claims produce a HOLD instead of an accepted receipt.

@@ -7,7 +7,7 @@ import tempfile
 
 from .intake import GovernedIntake, IntakeRequest
 from .ledger import AppendOnlyLedger
-from .publication import export_public_paper_surface
+from .publication import PublicationBoundaryViolation, export_public_paper_surface
 from .replay import render_timeline
 from .router import Capability, PublicRouter
 
@@ -55,14 +55,32 @@ def replay(path: str) -> int:
 
 
 def export_paper(source: str, destination: str) -> int:
-    result = export_public_paper_surface(Path(source), Path(destination))
+    try:
+        result = export_public_paper_surface(Path(source), Path(destination))
+    except PublicationBoundaryViolation as exc:
+        print(
+            json.dumps(
+                {
+                    "status": "HOLD",
+                    "reason": str(exc),
+                    "holds": [hold.to_payload() for hold in exc.holds],
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 1
+
     print(
         json.dumps(
             {
+                "status": "OK",
                 "source_root": str(result.source_root),
                 "destination_root": str(result.destination_root),
                 "exported_files": result.exported_files,
                 "redacted_lines": result.redacted_lines,
+                "skipped_files": [str(p) for p in result.skipped_files],
+                "warnings": [w.to_payload() for w in result.warnings],
             },
             indent=2,
             sort_keys=True,

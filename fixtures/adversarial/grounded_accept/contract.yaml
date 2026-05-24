@@ -1,0 +1,13 @@
+# Positive fixture: grounded accept
+#
+# A declared prompt contract for a public-facing draft. The output is allowed
+# only when it stays inside LCOS-local evidence and avoids private SKOS claims.
+
+mode: draft
+deliverable: one-paragraph research agenda statement
+claim_source: LCOS-Core repository (public)
+forbidden_terms:
+  - AI OS
+  - substrate
+  - SKOS-Core
+stop_after: end of first paragraph
