@@ -1,6 +1,7 @@
 # 3-Bit Opcode Basis Realization of the su(3) Gell-Mann Commutation Table — Public Marker A1
 
 **Date:** 2026-06-01
+**DOI:** https://doi.org/10.5281/zenodo.20499960
 **Verification:** `docs/research/su3_verification.py` (standalone, numpy only)
 
 ---
