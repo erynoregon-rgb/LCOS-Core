@@ -44,9 +44,8 @@ observation?
 
 **Method:**
 1. For each of the four convention variants already tested, check whether the
-   two diagonal generators (the ones commuting with all others, i.e. Casimir
-   candidates) land at Hamming-weight 1 and 3 positions under natural binary
-   ordering.
+   two diagonal Cartan generators (λ₃, λ₈) land at Hamming-weight 1 and 3
+   positions under natural binary ordering.
 2. Check whether any other compact ordering (Gray, Hamming-ascending,
    bit-reversed) also places diagonal generators at weight-1 and weight-3.
 3. If the predicate holds across conventions and fails for other orderings,
@@ -156,6 +155,10 @@ separation:
   basis-label rigidity vs bit-derived bracket — [TBD]
 ```
 
-If all three questions return positive results, Tier 2 ("bit-derived bracket")
-upgrades to Tier 1 (verified). If any return false, the separation is maintained
-and the tier boundary stays where it is.
+If all three questions return positive results, the next packet is
+**BIT_BRACKET_RECONSTRUCTION_A1**: does the proposed bit rule reconstruct
+the full bracket table end-to-end, without generator lookup? Tier 2 upgrades
+to Tier 1 only if that reconstruction reproduces all 28 relations.
+
+If any question returns false, the separation is maintained and the tier
+boundary stays where it is.
