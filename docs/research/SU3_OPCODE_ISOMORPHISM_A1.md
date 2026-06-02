@@ -29,6 +29,11 @@ This is a structural result under a defined encoding, not a claim that 8
 bitstrings are themselves a Lie algebra. The bracket operation, basis mapping,
 and normalization are specified explicitly in the verification script.
 
+**Convention robustness:** uniqueness holds across tested sign conventions:
+standard Gell-Mann, negated imaginary generators (λ₂,λ₅,λ₇ → −λ₂,−λ₅,−λ₇),
+swapped diagonal ordering (λ₃↔λ₈), and full sign flip. In each case the
+natural binary ordering is the unique 28/28 mapping; next best remains 20/28.
+
 ---
 
 ## The mapping
