@@ -146,8 +146,9 @@ no deep structural signal. Removes the Hamming-weight thread from
 BIT_STRUCTURE_AUDIT_A1 open questions.
 
 The negative controls rule out the interpretation that any compact or sequential
-ordering of 8 elements would produce high scores. The uniqueness is specific to
-the natural binary counting order.
+ordering of 8 elements would produce high scores. Within the tested
+pure-permutation search space and fixed convention, the uniqueness is specific
+to the natural binary counting order.
 
 ---
 
