@@ -40,13 +40,15 @@ LAMBDA = [
 # ── Layer 1: derive f_{abc} from the matrices ─────────────────────────────────
 # f_{abc} = Tr([λ_a, λ_b] λ_c) / (4i)
 
-def derive_f():
+def derive_f(L=None):
+    if L is None:
+        L = LAMBDA
     f = {}
     for a in range(8):
         for b in range(8):
-            comm = LAMBDA[a] @ LAMBDA[b] - LAMBDA[b] @ LAMBDA[a]
+            comm = L[a] @ L[b] - L[b] @ L[a]
             for c in range(8):
-                val = np.trace(comm @ LAMBDA[c]) / (4j)
+                val = np.trace(comm @ L[c]) / (4j)
                 if abs(val) > 1e-12:
                     f[(a,b,c)] = float(val.real)
     return f
@@ -77,8 +79,10 @@ def build_f_hand():
 
 # ── Check commutation relations ───────────────────────────────────────────────
 
-def check_mapping(assignment, f):
-    ops = [LAMBDA[i] for i in assignment]
+def check_mapping(assignment, f, L=None):
+    if L is None:
+        L = LAMBDA
+    ops = [L[i] for i in assignment]
     passes = 0
     max_err = 0.0
     for a in range(8):
@@ -154,8 +158,35 @@ def main():
     status = "HOLDS" if err < 1e-10 else "FAILS"
     print(f"    {status} (error: {err:.2e})")
 
+    # Convention robustness — four sign/ordering variants
+    print("\n[6] Convention robustness (4 variants, exhaustive search each)...")
+    variants = [
+        ("Standard Gell-Mann",                    LAMBDA),
+        ("Negated imag gens (λ2,λ5,λ7 → -)",     [m if i not in (1,4,6) else -m
+                                                    for i,m in enumerate(LAMBDA)]),
+        ("Swapped diagonal (λ3↔λ8)",              [LAMBDA[7] if i==2 else
+                                                    LAMBDA[2] if i==7 else m
+                                                    for i,m in enumerate(LAMBDA)]),
+        ("All generators negated",                 [-m for m in LAMBDA]),
+    ]
+    convention_ok = True
+    for label, L in variants:
+        fv = derive_f(L)
+        nat, _ = check_mapping(list(range(8)), fv, L)
+        b = 0; bc = 0; sb = 0
+        for perm in permutations(range(8)):
+            p, _ = check_mapping(list(perm), fv, L)
+            if p > b: sb = b; b = p; bc = 1
+            elif p == b: bc += 1
+            elif p > sb: sb = p
+        unique = "UNIQUE" if bc == 1 else f"NOT unique ({bc})"
+        ok = (nat == 28 and bc == 1)
+        convention_ok = convention_ok and ok
+        print(f"    {label}: {nat}/28, {unique}, next={sb}/28 {'✓' if ok else '✗'}")
+
     print("\n" + "=" * 70)
-    all_ok = (table_ok and passes_d == 28 and passes_h == 28 and best_count == 1)
+    all_ok = (table_ok and passes_d == 28 and passes_h == 28
+              and best_count == 1 and convention_ok)
     print(f"RESULT: {'VERIFIED' if all_ok else 'FAILED'}")
     print("=" * 70)
 
