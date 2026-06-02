@@ -3,7 +3,7 @@
 **Date:** 2026-06-01
 **DOI:** https://doi.org/10.5281/zenodo.20499960
 **Verification:** `docs/research/su3_verification.py` (standalone, numpy only)
-**Script SHA-256:** `eabd717b7af925e9a7a9470f38bc6b0a02c24b8e6775f03776b46405576b9dbd`
+**Script SHA-256:** `520a5bf02979715d31239aea2baf2880f2a9b6979babbd6999a11a9ce90e9d34`
 **Commit:** `973d58088a264ed80444d0a7b7525cff9104f53a`
 **numpy version tested:** 1.26.4
 
@@ -118,18 +118,56 @@ permutation are outside the tested search space unless explicitly stated.
 
 ---
 
+## Negative controls
+
+Tested in script section [7] under the same fixed convention as the main result.
+
+| Ordering | Score |
+|---|---|
+| Natural binary (000..111) | **28/28** |
+| Gray code (000,001,011,010,...) | 0/28 |
+| Hamming weight ascending | 11/28 |
+| Hamming weight descending | 1/28 |
+| Bit-reversed (000,100,010,...) | 2/28 |
+| Random control A | 0/28 |
+| Random control B | 0/28 |
+
+All controls score below the 20/28 next-best threshold established by the
+exhaustive permutation search. Gray code and random controls score 0/28.
+
+Hamming weight ascending (11/28) is the only non-natural structural ordering
+to score above 0/28. This suggests partial but insufficient structural overlap
+with the su(3) commutation table. Investigated further in BIT_STRUCTURE_AUDIT_A1.
+
+The negative controls rule out the interpretation that any compact or sequential
+ordering of 8 elements would produce high scores. The uniqueness is specific to
+the natural binary counting order.
+
+---
+
 ## Next verification (open)
 
 **BIT_STRUCTURE_AUDIT_A1:** Which parts of the su(3) commutation table are
 predictable from bit-level structure alone, without using generator lookup?
 
-Tests:
-- Can off-diagonal vs diagonal generators be recovered from bit predicates?
-- Can the commutator output index c be predicted from bitwise relations on a,b?
-- Can signs be predicted from bit/chirality/orientation rules?
-- Compare natural binary order against Gray code, parity order, Hamming-weight
-  order, and random orderings
-- Separate "basis label uniqueness" from "bit-derived operation"
+Open questions:
+- **Diagonal generator predicate:** positions 2 (010) and 7 (111) are the two
+  diagonal generators (λ₃, λ₈). In 3-bit space, 010 has Hamming weight 1 and
+  111 has Hamming weight 3 — the two extremes of the non-zero range. Test:
+  "diagonal generators sit at Hamming weight 1 and Hamming weight 3." If this
+  predicate holds without lookup, it is the first bit-derived structural fact
+  about the mapping.
+- **Output index prediction:** can the output index c in [λa,λb] = 2i f_{abc} λc
+  be predicted from bitwise operations on a and b? Pure XOR fails for the
+  su(2) subalgebra (0 XOR 1 = 1 ≠ 2). Test XOR-with-carry and other modified
+  bit operations systematically.
+- **Sign prediction:** can the sign of f_{abc} be predicted from bit/chirality
+  relations among a, b, c?
+- **Hamming-weight overlap:** the 11/28 score for Hamming-weight-ascending is
+  the only non-trivial control result. Identify which 11 relations it satisfies
+  and whether they share a structural pattern.
+- **Separation:** distinguish "basis label uniqueness" (current result) from
+  "bit-derived bracket operation" (open).
 
 ---
 

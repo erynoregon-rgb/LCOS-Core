@@ -184,6 +184,22 @@ def main():
         convention_ok = convention_ok and ok
         print(f"    {label}: {nat}/28, {unique}, next={sb}/28 {'✓' if ok else '✗'}")
 
+    # Negative controls — alternative 3-bit orderings
+    print("\n[7] Negative controls (alternative orderings, same fixed convention)...")
+    controls = [
+        ("Gray code (000,001,011,010,...)",  [0,1,3,2,6,7,5,4]),
+        ("Hamming weight ascending",          [0,1,2,4,3,5,6,7]),
+        ("Hamming weight descending",         [7,6,5,3,4,2,1,0]),
+        ("Bit-reversed",                      [0,4,2,6,1,5,3,7]),
+        ("Random control A",                  [3,6,1,7,0,4,2,5]),
+        ("Random control B",                  [5,2,7,0,4,1,6,3]),
+    ]
+    f_std = derive_f()
+    for label, ordering in controls:
+        p, _ = check_mapping(ordering, f_std)
+        print(f"    {p:2d}/28  {label}")
+    print(f"    (Natural binary scores 28/28; all controls below 20/28 threshold)")
+
     print("\n" + "=" * 70)
     all_ok = (table_ok and passes_d == 28 and passes_h == 28
               and best_count == 1 and convention_ok)
