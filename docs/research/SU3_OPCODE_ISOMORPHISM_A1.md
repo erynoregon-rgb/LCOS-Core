@@ -136,8 +136,14 @@ All controls score below the 20/28 next-best threshold established by the
 exhaustive permutation search. Gray code and random controls score 0/28.
 
 Hamming weight ascending (11/28) is the only non-natural structural ordering
-to score above 0/28. This suggests partial but insufficient structural overlap
-with the su(3) commutation table. Investigated further in BIT_STRUCTURE_AUDIT_A1.
+to score above 0/28. Diagnostic run identifies this as a single-transposition
+artifact, not partial structural overlap: the hw-ascending ordering differs
+from natural binary only by swapping opcodes 011 and 100 (positions 3 and 4).
+The 11 passing relations are exactly those not involving either swapped position
+— the intact su(2) isospin subalgebra {λ1,λ2,λ3} and the GB pair {λ6,λ7,λ8}.
+Every failing relation involves at least one swapped position. Thread closed;
+no deep structural signal. Removes the Hamming-weight thread from
+BIT_STRUCTURE_AUDIT_A1 open questions.
 
 The negative controls rule out the interpretation that any compact or sequential
 ordering of 8 elements would produce high scores. The uniqueness is specific to
@@ -163,9 +169,8 @@ Open questions:
   bit operations systematically.
 - **Sign prediction:** can the sign of f_{abc} be predicted from bit/chirality
   relations among a, b, c?
-- **Hamming-weight overlap:** the 11/28 score for Hamming-weight-ascending is
-  the only non-trivial control result. Identify which 11 relations it satisfies
-  and whether they share a structural pattern.
+- **Hamming-weight overlap:** CLOSED — single-transposition artifact (swap
+  positions 3,4). No deep structural signal. See negative controls section.
 - **Separation:** distinguish "basis label uniqueness" (current result) from
   "bit-derived bracket operation" (open).
 
@@ -196,7 +201,7 @@ Open questions:
 python3 docs/research/su3_verification.py
 ```
 
-Expected:
+Expected summary lines include:
 ```
 su(3) commutation check (natural binary ordering): 28/28 passed (max error: 4.44e-16)
 Natural binary ordering: UNIQUE — 28/28 (next best: 20/28 over 40,320 tested)
