@@ -29,6 +29,6 @@ jobs:
 
       - name: Smoke test CLI
         run: |
-          python -m lcos_toy.cli demo-ledger
-          python -m lcos_toy.cli demo-intake examples/requests/simple_accept.json
-          python -m lcos_toy.cli demo-route "summarize this audit receipt"
+          python -m lcos_public.cli demo-ledger
+          python -m lcos_public.cli demo-intake examples/requests/simple_accept.json
+          python -m lcos_public.cli demo-route "summarize this audit receipt"
