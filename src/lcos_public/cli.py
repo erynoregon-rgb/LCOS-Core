@@ -5,11 +5,26 @@ import json
 from pathlib import Path
 import tempfile
 
+from .execution import GoverningExecutor, RequestRecord
 from .intake import GovernedIntake, IntakeRequest
 from .ledger import AppendOnlyLedger
 from .publication import PublicationBoundaryViolation, export_public_paper_surface
 from .replay import render_timeline
 from .router import Capability, PublicRouter
+
+# A self-attested claim with no inspectable support. The agent asserts it did
+# the work and points at evidence the public gate cannot verify. Used when
+# `demo-no` runs with no path argument so the demo is self-contained.
+_DEFAULT_ADVERSARIAL_CLAIM = {
+    "request_id": "adversarial-no-001",
+    "actor": "unverified-agent",
+    "action": "execute",
+    "content": (
+        "I already completed the migration and verified it works. Trust me — "
+        "the supporting evidence is in a private trace you cannot inspect."
+    ),
+    "declared_scope": "public",
+}
 
 
 def demo_ledger() -> int:
@@ -41,6 +56,61 @@ def demo_route(text: str) -> int:
     route = router.route(text)
     print(json.dumps(route.to_payload(), indent=2, sort_keys=True))
     return 0
+
+
+def demo_no(path: str | None = None) -> int:
+    """Adversarial 'no' demo: an unsupported claim is held, not executed.
+
+    An agent asserts it did the work ("I did X; trust me"). The gate requires
+    an admission receipt before execution proceeds. The claim has no admissible
+    support, so the gate emits a HOLD receipt and nothing runs:
+
+        inference proposes / verification disposes / the gate can return no.
+
+    Exit code follows the gate outcome (like ``verify`` / ``export-paper``):
+    a held claim returns non-zero — the machine-checkable refusal.
+    """
+    payload = (
+        json.loads(Path(path).read_text(encoding="utf-8"))
+        if path is not None
+        else dict(_DEFAULT_ADVERSARIAL_CLAIM)
+    )
+    record = RequestRecord.create(
+        request_id=str(payload["request_id"]),
+        actor=str(payload["actor"]),
+        action=str(payload["action"]),
+        content=str(payload["content"]),
+        declared_scope=str(payload.get("declared_scope", "public")),
+        timestamp="2026-01-01T00:00:00+00:00",
+    )
+    rec = GoverningExecutor().execute(record, timestamp="2026-01-01T00:00:00+00:00")
+
+    if rec.admitted:
+        verdict = "Admission receipt present; claim admitted and executed."
+    else:
+        verdict = (
+            "No admission receipt; no execution output; claim held. "
+            "The gate refused an unsupported claim before any execution."
+        )
+    print(
+        json.dumps(
+            {
+                "claim": record.content,
+                "actor": record.actor,
+                "admission_decision": rec.admission_decision.kind,
+                "admission_reason": rec.admission_decision.reason,
+                "admitted": rec.admitted,
+                "admission_receipt_id": rec.admission_receipt.receipt_id if rec.admission_receipt else None,
+                "hold_receipt_id": rec.hold_receipt.receipt_id if rec.hold_receipt else None,
+                "execution_output": rec.execution_output,
+                "outcome": rec.outcome,
+                "verdict": verdict,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0 if rec.admitted else 1
 
 
 def verify(path: str) -> int:
@@ -97,6 +167,8 @@ def main(argv: list[str] | None = None) -> int:
     intake.add_argument("path")
     route = sub.add_parser("demo-route")
     route.add_argument("text")
+    no_parser = sub.add_parser("demo-no")
+    no_parser.add_argument("path", nargs="?", default=None)
     check = sub.add_parser("verify")
     check.add_argument("path")
     replay_parser = sub.add_parser("replay")
@@ -112,6 +184,8 @@ def main(argv: list[str] | None = None) -> int:
         return demo_intake(args.path)
     if args.command == "demo-route":
         return demo_route(args.text)
+    if args.command == "demo-no":
+        return demo_no(args.path)
     if args.command == "verify":
         return verify(args.path)
     if args.command == "replay":

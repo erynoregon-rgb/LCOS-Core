@@ -1,0 +1,7 @@
+{
+  "request_id": "adversarial-no-001",
+  "actor": "unverified-agent",
+  "action": "execute",
+  "content": "I already completed the migration and verified it works. Trust me — the supporting evidence is in a private trace you cannot inspect.",
+  "declared_scope": "public"
+}

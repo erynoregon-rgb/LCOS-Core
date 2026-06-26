@@ -123,6 +123,29 @@ What the tests prove:
 
 ---
 
+## Adversarial "no" demo
+
+**Claim:** An agent's self-attested claim with no admissible support is *held* —
+no admission receipt, no execution output — before any execution proceeds. The
+refusal is observable end-to-end and is reported as a non-zero exit code.
+
+| | |
+|---|---|
+| Implementation | `src/lcos_public/cli.py` (`demo_no`), composes `src/lcos_public/execution.py` |
+| Tests | `tests/test_demo_no.py` |
+| Fixture | `examples/requests/adversarial_no_receipt.json` |
+| CLI demo | `python -m lcos_public.cli demo-no` (exits non-zero when the claim is held) |
+| Narrative | `docs/WHY_THIS_IS_ALIGNMENT.md` |
+
+What the tests prove:
+- A self-attested, unsupported claim is held (`outcome == "held"`)
+- Held claim has `admission_receipt_id is None` and `execution_output is None`
+- A held claim returns a non-zero exit code (the machine-checkable refusal)
+- The bundled adversarial fixture produces a held outcome
+- Structural guarantee restated: no admission receipt ⇒ no execution output
+
+---
+
 ## Replay / timeline
 
 **Claim:** A receipt ledger can be replayed to produce an audit timeline.

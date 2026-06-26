@@ -23,6 +23,8 @@ production reliability.
 - The intake workbench produces accept/hold/reject decisions.
 - The router is deterministic and returns visible reasons.
 - The replay tool renders a timeline from receipt JSONL.
+- LCOS-Core demonstrates a gate-first pattern: unsupported AI-assisted claims can
+  be held before downstream execution when required admission evidence is absent.
 - The public positioning packet describes a fundable public scaffold, not the
   private substrate.
 

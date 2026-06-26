@@ -32,6 +32,7 @@ python -m pip install -e .
 python -m lcos_public.cli demo-ledger
 python -m lcos_public.cli demo-intake examples/requests/simple_accept.json
 python -m lcos_public.cli demo-route "summarize this audit receipt"
+python -m lcos_public.cli demo-no            # gate refuses an unsupported claim
 python -m unittest discover -s tests
 ```
 
@@ -40,7 +41,13 @@ Expected results:
 - `demo-ledger` — prints a hash-linked receipt timeline and confirms `valid=true`
 - `demo-intake` — returns `{"kind": "ACCEPT", ...}` for a well-formed public request
 - `demo-route` — returns a deterministic kernel routing decision with a visible reason
+- `demo-no` — an agent asserts an unsupported claim; the gate holds it
+  (`admission_receipt: null`, `execution_output: null`) and **exits non-zero** —
+  the refusal as a machine-checkable signal
 - `tests` — all pass
+
+For why this is an alignment problem — inference proposes, verification disposes,
+the gate can return no — see [`docs/WHY_THIS_IS_ALIGNMENT.md`](docs/WHY_THIS_IS_ALIGNMENT.md).
 
 For the full walkthrough including tamper detection and claim lifecycle, see
 [`docs/research/WORKED_EXAMPLE_RECEIPT_REPLAY.md`](docs/research/WORKED_EXAMPLE_RECEIPT_REPLAY.md).
@@ -135,6 +142,7 @@ python -m pip install -e .
 python -m lcos_public.cli demo-ledger
 python -m lcos_public.cli demo-intake examples/requests/simple_accept.json
 python -m lcos_public.cli demo-route "summarize this audit receipt"
+python -m lcos_public.cli demo-no
 python -m unittest discover -s tests
 ```
 
