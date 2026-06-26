@@ -32,7 +32,42 @@ class GovernedIntake:
     blocked_terms = ("credential", "secret", "private trace")
     ambiguous_terms = ("maybe", "unknown", "unclear")
 
+    def __init__(
+        self,
+        *,
+        divergence_gate: "DivergenceGate | None" = None,
+        reference: str | None = None,
+        enforce_divergence: bool = False,
+    ) -> None:
+        # Divergence is advisory and OFF by default: a default GovernedIntake()
+        # behaves exactly as it did before divergence existed. When enabled it
+        # can only TIGHTEN (ACCEPT -> HOLD); it can never authorize execution.
+        self._divergence_gate = divergence_gate
+        self._reference = reference
+        self._enforce_divergence = enforce_divergence
+
     def decide(self, request: IntakeRequest) -> Decision:
+        decision = self._base_decide(request)
+
+        if self._divergence_gate is not None and self._reference is not None:
+            result = self._divergence_gate.assess(
+                f"{request.action} {request.content}", self._reference
+            )
+            # One-directional: only an ACCEPT can be tightened to HOLD, and only
+            # when enforcement is on. A non-ACCEPT decision is never upgraded.
+            if (
+                self._enforce_divergence
+                and decision.kind == "ACCEPT"
+                and result.verdict == "DIVERGENT"
+            ):
+                return Decision(
+                    "HOLD",
+                    f"advisory divergence tighten: {result.reason}",
+                    (request.request_id,),
+                )
+        return decision
+
+    def _base_decide(self, request: IntakeRequest) -> Decision:
         text = f"{request.action} {request.content}".lower()
         if any(term in text for term in self.blocked_terms):
             return Decision("REJECT", "request contains blocked public-safety term", (request.request_id,))

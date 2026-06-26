@@ -146,6 +146,32 @@ What the tests prove:
 
 ---
 
+## Advisory divergence measure
+
+**Claim:** A proposer can *measure* how far a proposed action diverges from an
+authored reference, but cannot set its own admission floor and the measurement
+cannot, by itself, authorize execution. Divergence is advisory and default-off;
+when enabled it can only *tighten* a decision (`ACCEPT → HOLD`), never upgrade.
+
+| | |
+|---|---|
+| Implementation | `src/lcos_public/divergence.py`; advisory hook in `src/lcos_public/intake.py` |
+| Tests | `tests/test_divergence.py` |
+| CLI demo | `python -m lcos_public.cli demo-divergence "<proposed>" "<reference>"` |
+
+What the tests prove:
+- Identical → `WITHIN` (0.0); disjoint → `DIVERGENT` (1.0); deterministic
+- Empty reference → `UNVERIFIABLE`, never silently `WITHIN` (fail-closed)
+- Threshold is gate-owned: `assess()` has no call-time threshold (proposer can't lower the floor)
+- Default `GovernedIntake()` is byte-identical (divergence off by default)
+- With enforcement on, divergence tightens `ACCEPT → HOLD` but **cannot** turn a `REJECT` into `ACCEPT`
+
+The scorer is a deliberately generic token-Jaccard stand-in for a learned
+distance, swappable behind `DivergenceScorer`; the governance semantics are the
+load-bearing part.
+
+---
+
 ## Replay / timeline
 
 **Claim:** A receipt ledger can be replayed to produce an audit timeline.

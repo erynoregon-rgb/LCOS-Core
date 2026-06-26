@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 
+from .divergence import DivergenceGate
 from .execution import GoverningExecutor, RequestRecord
 from .intake import GovernedIntake, IntakeRequest
 from .ledger import AppendOnlyLedger
@@ -113,6 +114,25 @@ def demo_no(path: str | None = None) -> int:
     return 0 if rec.admitted else 1
 
 
+def demo_divergence(proposed: str, reference: str) -> int:
+    """Advisory divergence demo: measure proposed vs an authored reference.
+
+    The proposer measures ε; the floor is gate-owned. The result is advisory —
+    `assess` cannot authorize anything, and there is no call-time threshold a
+    proposer could lower. Exit code is non-zero on a non-WITHIN verdict so the
+    advisory signal is machine-checkable.
+    """
+    gate = DivergenceGate(threshold=0.5)
+    result = gate.assess(proposed, reference)
+    payload = dict(result.to_payload())
+    payload["proposed"] = proposed
+    payload["reference"] = reference
+    payload["floor"] = gate.threshold
+    payload["note"] = "advisory only — measurement cannot authorize execution"
+    print(json.dumps(payload, indent=2, sort_keys=True))
+    return 0 if result.verdict == "WITHIN" else 1
+
+
 def verify(path: str) -> int:
     report = AppendOnlyLedger(path).verify()
     print(json.dumps({"valid": report.valid, "count": report.count, "issues": [issue.__dict__ for issue in report.issues]}, indent=2))
@@ -169,6 +189,9 @@ def main(argv: list[str] | None = None) -> int:
     route.add_argument("text")
     no_parser = sub.add_parser("demo-no")
     no_parser.add_argument("path", nargs="?", default=None)
+    div = sub.add_parser("demo-divergence")
+    div.add_argument("proposed")
+    div.add_argument("reference")
     check = sub.add_parser("verify")
     check.add_argument("path")
     replay_parser = sub.add_parser("replay")
@@ -186,6 +209,8 @@ def main(argv: list[str] | None = None) -> int:
         return demo_route(args.text)
     if args.command == "demo-no":
         return demo_no(args.path)
+    if args.command == "demo-divergence":
+        return demo_divergence(args.proposed, args.reference)
     if args.command == "verify":
         return verify(args.path)
     if args.command == "replay":

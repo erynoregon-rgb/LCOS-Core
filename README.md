@@ -33,6 +33,7 @@ python -m lcos_public.cli demo-ledger
 python -m lcos_public.cli demo-intake examples/requests/simple_accept.json
 python -m lcos_public.cli demo-route "summarize this audit receipt"
 python -m lcos_public.cli demo-no            # gate refuses an unsupported claim
+python -m lcos_public.cli demo-divergence "summarize and execute the migration" "audit the migration and hold for review"
 python -m unittest discover -s tests
 ```
 
@@ -44,6 +45,9 @@ Expected results:
 - `demo-no` — an agent asserts an unsupported claim; the gate holds it
   (`admission_receipt: null`, `execution_output: null`) and **exits non-zero** —
   the refusal as a machine-checkable signal
+- `demo-divergence` — measures how far a proposed action diverges from an
+  authored reference; the floor is **gate-owned** (not proposer-settable) and the
+  result is **advisory** — it can tighten a decision, never authorize one
 - `tests` — all pass
 
 For why this is an alignment problem — inference proposes, verification disposes,

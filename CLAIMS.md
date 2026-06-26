@@ -25,6 +25,9 @@ production reliability.
 - The replay tool renders a timeline from receipt JSONL.
 - LCOS-Core demonstrates a gate-first pattern: unsupported AI-assisted claims can
   be held before downstream execution when required admission evidence is absent.
+- LCOS-Core demonstrates an advisory divergence measure whose admission floor is
+  gate-owned (not proposer-settable) and which can only tighten a decision, never
+  authorize one. The scorer is a generic stand-in, not a learned model.
 - The public positioning packet describes a fundable public scaffold, not the
   private substrate.
 
