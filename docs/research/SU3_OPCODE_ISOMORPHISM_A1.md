@@ -1,7 +1,12 @@
-> **Correction (2026-08):** the uniqueness claim below is **unestablished** — the original
-> verification contained a comparison-oracle defect and could only ever confirm the identity
-> permutation. The Gell-Mann commutation verification (28/28) is unaffected. See
-> *Erratum, Limitations, and Future Exploration* at the end of this document.
+> **Corrected result (2026-08-27, supersedes the original interpretation):** the computation
+> in this document is valid and establishes a rigidity lemma — *the standard Gell-Mann
+> structure-constant table admits no nontrivial permutation automorphism* (exhaustive
+> search, 8! orderings, identity uniquely scores 28/28; robust across four sign/ordering
+> conventions). The original headline — that the natural 3-bit binary ordering is a
+> distinguished opcode-to-su(3) labeling — is **withdrawn as unestablished**: no property
+> of the binary structure enters the mathematics, and uniqueness relative to a table
+> derived from the tested ordering is a property every fixed ordering shares. See
+> *Corrected Interpretation and Open Question* at the end of this document.
 
 # Unique 3-Bit Opcode Labeling of the Gell-Mann su(3) Commutation Table Under Fixed Convention — Public Marker A1
 
@@ -219,34 +224,45 @@ Requires numpy only. No LCOS or SKOS dependencies.
 
 ---
 
-## Erratum, Limitations, and Future Exploration (added 2026-08-27)
+## Corrected Interpretation and Open Question (final, 2026-08-27)
 
-**Erratum.** The original verification script (`su3_verification.py`) tested candidate
-opcode orderings against structure constants derived from the identity-ordered
-Gell-Mann basis, held fixed. Under that construction only the identity permutation
-can pass, so the reported uniqueness result was vacuous as tested. The defect was
-identified by this project's internal claim-verification process in July 2026
-(reconciliation record: SU3_OPCODE_ISOMORPHISM_RECEIPT_A1; reconciliation assay:
-`su3_opcode_claim_reconciliation.py` in the private repository).
+**What the verification establishes (valid, retained):**
+1. The standard Gell-Mann su(3) commutation identities hold for the stated basis,
+   28/28 at machine precision, with the derived structure constants agreeing with
+   the standard hand table (Layers 1-2, Section [1]-[3] of the script output).
+2. **Rigidity lemma:** the Gell-Mann structure-constant tensor has a trivial
+   permutation-automorphism group — among all 40,320 generator orderings, only the
+   identity satisfies all 28 relations against the fixed table, with the runner-up
+   well separated. The exhaustive search is a legitimate finite computation; ties
+   were logically possible and were ruled out, not assumed away. The
+   convention-robustness runs (four sign/ordering variants) show the lemma is
+   basis-convention independent.
 
-**What stands.** The verification of the standard Gell-Mann su(3) commutation
-identities (28/28 at machine precision) is unaffected and remains valid. The
-combinatorial observations (C(4,2)=6 regime interactions; 2^3=8 generator states)
-are retained as observations.
+**What the original framing overclaimed (withdrawn):** the headline presented the
+result as a distinguished status for the *natural 3-bit binary ordering* as an
+opcode labeling. No property of the binary encoding is used anywhere in the
+computation — the opcodes are labels for indices 0-7. Because the reference table
+is derived from the same ordering under test, "uniqueness of the natural ordering
+relative to its own table" is a property every fixed ordering shares (the variant
+runs demonstrate exactly this). The rigidity belongs to the *table*, not to the
+*binary order*.
 
-**What is reopened, not refuted.** Whether a unique opcode-to-su(3) labeling exists
-is now an open question, untested rather than disproven. The interpretation of the
-six-regime and eight-phase structures as readouts of a shared su(3) algebra is
-likewise reopened and not currently claimed.
+**The properly-posed open question (future work):** whether any principled
+correspondence exists between 3-bit operational structure and su(3) generator
+structure requires a criterion that uses the bit structure itself — e.g., whether
+bitwise-defined operations on opcodes (XOR, Hamming adjacency, Gray transitions)
+map to algebraically meaningful operations on generators under some ordering, with
+structure constants re-derived per candidate. That question is untested here and
+remains open. The related interpretation of the six-regime (C(4,2)=6) and
+eight-phase (2^3=8) structures as readouts of a shared su(3) algebra is likewise
+reopened, with only the combinatorial counts retained as observations.
 
-**Future exploration.** A correct test requires re-deriving the structure constants
-from each permuted generator set and searching for structure-preserving maps
-(automorphisms) rather than comparing against a fixed table — i.e., the question
-becomes which orderings induce isomorphic commutation structure, a well-posed
-finite search. A v2 update to the Zenodo record will carry this erratum so the
-concept DOI resolves to the corrected status.
-
-**Provenance note.** This correction was produced by the same internal verification
-discipline the document describes; the defect, its detection, and this erratum are
-all receipted in the project's governance record.
+**Correction provenance (receipted):** original claim published 2026-06-01
+(Zenodo DOI 10.5281/zenodo.20499960). Internal reconciliation July 2026 flagged
+the uniqueness claim as unestablished (record: SU3_OPCODE_ISOMORPHISM_RECEIPT_A1).
+An August 2026 external-style adversarial review challenged the computation as
+tautologous; source re-adjudication found the computation valid and located the
+defect precisely in the interpretive frame, yielding this corrected statement.
+A v2 erratum carrying this final text will be posted to the Zenodo record so the
+concept DOI resolves to the corrected result.
 
