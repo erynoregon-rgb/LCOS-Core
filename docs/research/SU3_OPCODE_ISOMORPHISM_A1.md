@@ -1,3 +1,13 @@
+> **STATUS (2026-08-27): CENTRAL CLAIM REFUTED BY THE AUTHORS' OWN VERIFICATION APPARATUS.**
+> The uniqueness result reported below is an artifact of a comparison-oracle defect:
+> the verification script held the identity-derived structure constants fixed while
+> permuting generators, so the test could only ever confirm the identity permutation.
+> The defect was caught by this project's internal claim-verification process
+> (retraction record: SU3_OPCODE_ISOMORPHISM_RECEIPT_A1, July 2026). Only trivial
+> content survives (3-bit cardinality; standard Gell-Mann identities). This document
+> is retained, repointed, as a case study in governance-caught overclaim. A v2
+> erratum will be posted to the Zenodo record. **Do not cite the original claim.**
+
 # Unique 3-Bit Opcode Labeling of the Gell-Mann su(3) Commutation Table Under Fixed Convention — Public Marker A1
 
 **Date:** 2026-06-01
