@@ -1,12 +1,7 @@
-> **STATUS (2026-08-27): CENTRAL CLAIM REFUTED BY THE AUTHORS' OWN VERIFICATION APPARATUS.**
-> The uniqueness result reported below is an artifact of a comparison-oracle defect:
-> the verification script held the identity-derived structure constants fixed while
-> permuting generators, so the test could only ever confirm the identity permutation.
-> The defect was caught by this project's internal claim-verification process
-> (retraction record: SU3_OPCODE_ISOMORPHISM_RECEIPT_A1, July 2026). Only trivial
-> content survives (3-bit cardinality; standard Gell-Mann identities). This document
-> is retained, repointed, as a case study in governance-caught overclaim. A v2
-> erratum will be posted to the Zenodo record. **Do not cite the original claim.**
+> **Correction (2026-08):** the uniqueness claim below is **unestablished** — the original
+> verification contained a comparison-oracle defect and could only ever confirm the identity
+> permutation. The Gell-Mann commutation verification (28/28) is unaffected. See
+> *Erratum, Limitations, and Future Exploration* at the end of this document.
 
 # Unique 3-Bit Opcode Labeling of the Gell-Mann su(3) Commutation Table Under Fixed Convention — Public Marker A1
 
@@ -221,3 +216,37 @@ RESULT: VERIFIED
 ```
 
 Requires numpy only. No LCOS or SKOS dependencies.
+
+---
+
+## Erratum, Limitations, and Future Exploration (added 2026-08-27)
+
+**Erratum.** The original verification script (`su3_verification.py`) tested candidate
+opcode orderings against structure constants derived from the identity-ordered
+Gell-Mann basis, held fixed. Under that construction only the identity permutation
+can pass, so the reported uniqueness result was vacuous as tested. The defect was
+identified by this project's internal claim-verification process in July 2026
+(reconciliation record: SU3_OPCODE_ISOMORPHISM_RECEIPT_A1; reconciliation assay:
+`su3_opcode_claim_reconciliation.py` in the private repository).
+
+**What stands.** The verification of the standard Gell-Mann su(3) commutation
+identities (28/28 at machine precision) is unaffected and remains valid. The
+combinatorial observations (C(4,2)=6 regime interactions; 2^3=8 generator states)
+are retained as observations.
+
+**What is reopened, not refuted.** Whether a unique opcode-to-su(3) labeling exists
+is now an open question, untested rather than disproven. The interpretation of the
+six-regime and eight-phase structures as readouts of a shared su(3) algebra is
+likewise reopened and not currently claimed.
+
+**Future exploration.** A correct test requires re-deriving the structure constants
+from each permuted generator set and searching for structure-preserving maps
+(automorphisms) rather than comparing against a fixed table — i.e., the question
+becomes which orderings induce isomorphic commutation structure, a well-posed
+finite search. A v2 update to the Zenodo record will carry this erratum so the
+concept DOI resolves to the corrected status.
+
+**Provenance note.** This correction was produced by the same internal verification
+discipline the document describes; the defect, its detection, and this erratum are
+all receipted in the project's governance record.
+
